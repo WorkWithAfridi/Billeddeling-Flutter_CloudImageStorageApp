@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../../data/constants/dimentions.dart';
+
 class OnlineGalleryPage extends StatelessWidget {
   const OnlineGalleryPage({Key? key}) : super(key: key);
 
@@ -8,6 +10,9 @@ class OnlineGalleryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 10,
+        ),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -25,9 +30,12 @@ class OnlineGalleryPage extends StatelessWidget {
             ],
           ),
           itemBuilder: (context, index) {
-            return Image.network(
-              "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-              fit: BoxFit.fill,
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(customBorderRadius),
+              child: Image.network(
+                "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
+                fit: BoxFit.fill,
+              ),
             );
           },
         ),
