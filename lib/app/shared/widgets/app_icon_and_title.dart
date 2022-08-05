@@ -41,7 +41,7 @@ class AppIconAndTitle extends StatelessWidget {
               ),
             ),
             Text(
-              "Image Sharing App",
+              "Cloud Storage for Images.",
               style: regularTextStyle.copyWith(
                 height: .7,
                 fontSize: 8,
