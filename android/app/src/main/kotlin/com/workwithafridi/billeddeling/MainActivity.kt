@@ -1,4 +1,4 @@
-package com.example.billeddeling
+package com.workwithafridi.billeddeling
 
 import io.flutter.embedding.android.FlutterActivity
 
