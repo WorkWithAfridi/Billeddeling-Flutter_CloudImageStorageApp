@@ -58,31 +58,45 @@ class IntroductionTab extends StatelessWidget {
         const SizedBox(
           width: 8,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  const TextSpan(
-                    text: "Hi, ",
-                    style: regularTextStyle,
-                  ),
-                  TextSpan(
-                    text: "Khondakar Afridi",
-                    style: semiBoldTextStyle.copyWith(color: red),
-                  )
-                ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: "Hi, ",
+                      style: regularTextStyle,
+                    ),
+                    TextSpan(
+                      text: "Khondakar Afridi",
+                      style: semiBoldTextStyle.copyWith(color: red),
+                    )
+                  ],
+                ),
               ),
+              Text(
+                "Welcome Back!!",
+                style: semiBoldTextStyle.copyWith(
+                  color: black.withOpacity(.8),
+                  height: .95,
+                ),
+              )
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: controller.onSearchButtonClick,
+          child: CircleAvatar(
+            backgroundColor: red.withOpacity(.1),
+            radius: 20,
+            child: const Icon(
+              Icons.search,
+              color: navyBlue,
+              size: 18,
             ),
-            Text(
-              "Welcome Back!!",
-              style: semiBoldTextStyle.copyWith(
-                color: black.withOpacity(.8),
-                height: .95,
-              ),
-            )
-          ],
+          ),
         ),
       ],
     );

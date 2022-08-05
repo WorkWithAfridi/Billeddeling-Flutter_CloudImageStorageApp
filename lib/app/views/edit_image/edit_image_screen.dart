@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/constants/colors.dart';
+import '../../shared/widgets/custom_text_field.dart';
 
 class EditImageScreen extends StatefulWidget {
   const EditImageScreen({Key? key}) : super(key: key);
@@ -49,12 +50,32 @@ class _EditImageScreenState extends State<EditImageScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                "• Selected image",
+                style: semiBoldTextStyle.copyWith(
+                  fontSize: 14,
+                  color: black,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               Container(
                 height: 300,
                 color: navyBlue,
               ),
               const SizedBox(
                 height: 15,
+              ),
+              Text(
+                "• Edit/ Add details",
+                style: semiBoldTextStyle.copyWith(
+                  fontSize: 14,
+                  color: black,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               CustomTextField(),
               const SizedBox(
@@ -64,7 +85,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
                 isData: true,
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               CustomButton(
                 title: "Upload",
@@ -78,73 +99,6 @@ class _EditImageScreenState extends State<EditImageScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    this.isData = false,
-  }) : super(key: key);
-
-  bool isData;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      style: regularTextStyle,
-      cursorColor: red,
-      maxLines: 1,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        hintText: "Enter title for the image...",
-        hintStyle: regularTextStyle,
-        border: OutlineInputBorder(
-          borderSide: Divider.createBorderSide(
-            Get.context,
-            color: grey,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(customBorderRadius),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: Divider.createBorderSide(
-            Get.context,
-            color: red,
-            width: 2.5,
-          ),
-          borderRadius: BorderRadius.circular(customBorderRadius),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: Divider.createBorderSide(
-            Get.context,
-            color: navyBlue,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(customBorderRadius),
-        ),
-        fillColor: navyBlue.withOpacity(.1),
-        filled: true,
-        contentPadding: const EdgeInsets.all(10),
-        suffix: isData
-            ? Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: navyBlue,
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                ),
-                child: Text(
-                  "TODAY",
-                  style: mediumTextStyle.copyWith(
-                    color: white,
-                  ),
-                ),
-              )
-            : const SizedBox.shrink(),
       ),
     );
   }

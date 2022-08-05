@@ -1,4 +1,5 @@
 import 'package:billeddeling/app/data/constants/animations.dart';
+import 'package:billeddeling/app/routing/routes.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -181,5 +182,9 @@ class HomeController extends GetxController {
         );
       },
     );
+  }
+
+  onSearchButtonClick() {
+    Get.toNamed(ROUTES.getSearchScreenRoute);
   }
 }
