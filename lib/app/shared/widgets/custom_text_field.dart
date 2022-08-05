@@ -44,7 +44,7 @@ class CustomTextField extends StatelessWidget {
           borderSide: Divider.createBorderSide(
             Get.context,
             color: navyBlue,
-            width: 1,
+            width: 1.5,
           ),
           borderRadius: BorderRadius.circular(customBorderRadius),
         ),
