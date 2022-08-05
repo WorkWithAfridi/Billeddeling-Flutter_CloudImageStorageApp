@@ -3,6 +3,8 @@ import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:billeddeling/app/views/home/homeframe.dart';
 import 'package:billeddeling/app/views/login/login_controller.dart';
 import 'package:billeddeling/app/views/login/login_screen.dart';
+import 'package:billeddeling/app/views/search_screen/search_controller.dart';
+import 'package:billeddeling/app/views/search_screen/search_screen.dart';
 import 'package:billeddeling/app/views/signup/signup_controller.dart';
 import 'package:billeddeling/app/views/signup/signup_screen.dart';
 import 'package:billeddeling/app/views/splash_screen/splash_controller.dart';
@@ -15,6 +17,7 @@ class ROUTES {
   static get getSignupRoute => "/login/signin";
   static get getHomeRoute => "/home";
   static get getEditImageScreenRoute => "/home/edit_image";
+  static get getSearchScreenRoute => "/home/search";
   static List<GetPage> routes = [
     GetPage(
       name: getSplashRoute,
@@ -39,6 +42,11 @@ class ROUTES {
     GetPage(
       name: getEditImageScreenRoute,
       page: () => const EditImageScreen(),
+    ),
+    GetPage(
+      name: getSearchScreenRoute,
+      page: () => const SearchScreen(),
+      binding: SearchBinding(),
     )
   ];
 }
