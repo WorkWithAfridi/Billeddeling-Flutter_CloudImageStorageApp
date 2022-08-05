@@ -34,15 +34,17 @@ class AppIconAndTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Billeddeling",
-              style: semiBoldTextStyle,
+              style: semiBoldTextStyle.copyWith(
+                fontSize: 16,
+              ),
             ),
             Text(
               "Image Sharing App",
               style: regularTextStyle.copyWith(
                 height: .7,
-                fontSize: 12,
+                fontSize: 8,
               ),
             ),
           ],

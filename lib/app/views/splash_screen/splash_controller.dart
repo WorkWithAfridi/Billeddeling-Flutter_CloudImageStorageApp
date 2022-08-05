@@ -1,3 +1,4 @@
+import 'package:billeddeling/app/routing/routes.dart';
 import 'package:get/get.dart';
 
 class SplashBinding extends Bindings {
@@ -14,5 +15,6 @@ class SplashController extends GetxController {
         seconds: 2,
       ),
     );
+    Get.offNamed(ROUTES.getLoginRoute);
   }
 }
