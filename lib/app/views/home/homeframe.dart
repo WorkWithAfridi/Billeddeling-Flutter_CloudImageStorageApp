@@ -51,7 +51,7 @@ class _HomeframeState extends State<Homeframe> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: controller.openProfilePopUp,
             icon: const Icon(
               FontAwesomeIcons.ellipsisVertical,
               size: 15,
@@ -79,7 +79,7 @@ class _HomeframeState extends State<Homeframe> {
       ),
       bottomNavigationBar: HomeframeBottonNavigationBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: controller.selectImageSource,
         child: const Icon(
           Icons.add,
         ),

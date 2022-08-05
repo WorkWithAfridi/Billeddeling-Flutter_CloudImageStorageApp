@@ -1,11 +1,13 @@
 import 'package:billeddeling/app/data/constants/colors.dart';
 import 'package:billeddeling/app/data/constants/fonts.dart';
 import 'package:billeddeling/app/shared/widgets/app_icon_and_title.dart';
+import 'package:billeddeling/app/shared/widgets/custom_back_button.dart';
 import 'package:billeddeling/app/views/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../data/constants/dimentions.dart';
 import '../../shared/widgets/custom_button.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -16,9 +18,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   final SignupController controller = Get.find();
-  
+
   @override
   void dispose() {
     Get.delete<SignupController>();
@@ -28,7 +29,11 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
+      appBar: AppBar(
+        leading: const CustomBackButton(),
+      ),
+      body: Container(
+        padding: customPadding,
         height: Get.height,
         width: Get.width,
         child: Column(
@@ -86,6 +91,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: kToolbarHeight,
             )
           ],
         ),

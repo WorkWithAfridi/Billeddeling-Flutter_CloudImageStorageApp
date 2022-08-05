@@ -1,4 +1,6 @@
+import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/fonts.dart';
@@ -14,20 +16,20 @@ class Homepage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        SizedBox(
+      children: [
+        const SizedBox(
           height: 5,
         ),
         IntroductionTab(),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        AccountStatusTab(),
-        SizedBox(
+        const AccountStatusTab(),
+        const SizedBox(
           height: 5,
         ),
-        ImageBrowserTab(),
-        SizedBox(
+        const ImageBrowserTab(),
+        const SizedBox(
           height: 30,
         ),
       ],
@@ -36,17 +38,22 @@ class Homepage extends StatelessWidget {
 }
 
 class IntroductionTab extends StatelessWidget {
-  const IntroductionTab({
+  IntroductionTab({
     Key? key,
   }) : super(key: key);
+
+  final HomeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CircleAvatar(
-          backgroundColor: navyBlue,
-          radius: 25,
+        GestureDetector(
+          onTap: controller.openProfilePopUp,
+          child: const CircleAvatar(
+            backgroundColor: navyBlue,
+            radius: 25,
+          ),
         ),
         const SizedBox(
           width: 8,

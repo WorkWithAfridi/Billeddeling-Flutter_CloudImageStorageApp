@@ -1,4 +1,5 @@
 import 'package:billeddeling/app/data/constants/colors.dart';
+import 'package:billeddeling/app/data/constants/dimentions.dart';
 import 'package:billeddeling/app/data/constants/fonts.dart';
 import 'package:billeddeling/app/shared/widgets/app_icon_and_title.dart';
 import 'package:billeddeling/app/views/login/login_controller.dart';
@@ -27,7 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
+      body: Container(
+        padding: customPadding,
         height: Get.height,
         width: Get.width,
         child: Column(
