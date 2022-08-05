@@ -136,24 +136,13 @@ class _EditImageScreenState extends State<EditImageScreen> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Obx(
-                          () => CustomTextField(
-                            textEditingController:
-                                controller.dateTextEditingController,
-                            title: controller.selectedDate.value,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 50,
-                            width: double.maxFinite,
-                            color: Colors.transparent,
-                          ),
-                        )
-                      ],
+                  Obx(
+                    () => Expanded(
+                      child: CustomTextField(
+                        textEditingController:
+                            controller.dateTextEditingController,
+                        title: controller.selectedDate.value,
+                      ),
                     ),
                   ),
                   const SizedBox(

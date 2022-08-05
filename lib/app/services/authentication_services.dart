@@ -24,6 +24,26 @@ class AuthenticationServices {
 
   UserModel? user;
 
+  Future updateUserImageList(String postId, String mode) async {
+    if (mode == "add") {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayUnion([postId])
+      });
+      return true;
+    } else {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayRemove([postId])
+      });
+      return true;
+    }
+  }
+
   Future _storeUserData({
     required String userId,
     required String name,

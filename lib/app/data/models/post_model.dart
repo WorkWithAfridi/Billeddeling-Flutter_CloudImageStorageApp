@@ -5,12 +5,14 @@ part 'post_model.g.dart';
 
 @JsonSerializable()
 class PostModel {
+  late String postId;
   late String imageId;
   late String userId;
   late String title;
   late String date;
   late String url;
   PostModel({
+    required this.postId,
     required this.imageId,
     required this.userId,
     required this.title,

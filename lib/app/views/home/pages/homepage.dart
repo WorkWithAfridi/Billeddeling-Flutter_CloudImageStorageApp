@@ -1,10 +1,12 @@
+import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/views/home/home_controller.dart';
+import 'package:billeddeling/app/views/home/widgets/image_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/fonts.dart';
-import '../widgets/image_tile.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({
@@ -143,12 +145,47 @@ class ImageBrowserTab extends StatelessWidget {
                 ),
                 textAlign: TextAlign.start,
               )
-            : ListView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return const ImageTile();
+            : GetBuilder<HomeController>(
+                init: HomeController(),
+                initState: (_) {},
+                builder: (_) {
+                  return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .where(
+                          "postId",
+                          whereIn: controller.user.imageList,
+                        )
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: ((context, index) {
+                                PostModel postModel = PostModel.fromJson(
+                                    snapshot.data!.docs[index]);
+                                return ImageTile(
+                                  postModel: postModel,
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
       ],
@@ -184,13 +221,19 @@ class AccountStatusTab extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                controller.user.imageList!.length.toString(),
-                style: semiBoldTextStyle.copyWith(
-                  color: red,
-                  fontSize: 30,
-                  height: .6,
-                ),
+              GetBuilder<HomeController>(
+                init: HomeController(),
+                initState: (_) {},
+                builder: (_) {
+                  return Text(
+                    controller.user.imageList!.length.toString(),
+                    style: semiBoldTextStyle.copyWith(
+                      color: red,
+                      fontSize: 30,
+                      height: .6,
+                    ),
+                  );
+                },
               ),
               const SizedBox(
                 width: 5,

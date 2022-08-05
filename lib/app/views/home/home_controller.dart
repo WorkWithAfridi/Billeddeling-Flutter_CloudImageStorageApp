@@ -37,6 +37,11 @@ class HomeController extends GetxController {
     );
   }
 
+  updateUserModel() async {
+    user = await AuthenticationServices().getUserModel();
+    update();
+  }
+
   SelectCropCompressImage selectCropCompressImage = SelectCropCompressImage();
 
   Future<void> selectImageSource() {
@@ -89,15 +94,15 @@ class HomeController extends GetxController {
                     .selectCropCompressImageFromGallery(
                         compressionAmount: 70, context: context);
                 if (image != null) {
+                  Get.back();
                   await Get.to(
                     () => EditImageScreen(
                       image: image!,
                     ),
                   );
-                  Get.back();
-                } else {
-                  Get.back();
+                  update();
                 }
+                Get.back();
               },
             ),
             SimpleDialogOption(
@@ -122,12 +127,13 @@ class HomeController extends GetxController {
                     .selectCropCompressImageFromCamera(
                         compressionAmount: 70, context: context);
                 if (image != null) {
+                  Get.back();
                   await Get.to(
                     () => EditImageScreen(
                       image: image!,
                     ),
                   );
-                  Get.back();
+                  update();
                 } else {
                   Get.back();
                 }

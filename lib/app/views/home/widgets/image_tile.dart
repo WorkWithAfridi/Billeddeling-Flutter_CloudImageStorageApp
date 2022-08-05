@@ -1,3 +1,4 @@
+import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/constants/colors.dart';
@@ -7,8 +8,9 @@ import '../../../data/constants/fonts.dart';
 class ImageTile extends StatelessWidget {
   const ImageTile({
     Key? key,
+    required this.postModel,
   }) : super(key: key);
-
+  final PostModel postModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +26,7 @@ class ImageTile extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(customBorderRadius),
                 child: Image.network(
-                  "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
+                  postModel.url,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -38,7 +40,7 @@ class ImageTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu.",
+                    postModel.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: regularTextStyle.copyWith(
@@ -49,7 +51,7 @@ class ImageTile extends StatelessWidget {
                     height: 4,
                   ),
                   Text(
-                    'Published on: 12/12/12',
+                    'Published on: ${postModel.date}',
                     style: regularTextStyle.copyWith(
                       height: .9,
                       fontSize: 12,

@@ -1,14 +1,16 @@
 import 'dart:typed_data';
 
+import 'package:billeddeling/app/services/image_services.dart';
 import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../home/home_controller.dart';
+
 class EditImageScreenController extends GetxController {
   late Uint8List? image;
   TextEditingController titleTextEditingController = TextEditingController();
-  TextEditingController dateTextEditingController = TextEditingController();
   var isUploadButtonLoading = false.obs;
   var selectedDate = "Select Date: ".obs;
   selectDate() async {
@@ -33,6 +35,18 @@ class EditImageScreenController extends GetxController {
     if (selectedDate.value != "Select Date: " &&
         titleTextEditingController.text.isNotEmpty &&
         image != null) {
+      await ImageServices().uploadImage(
+        image!,
+        titleTextEditingController.text,
+        selectedDate.value,
+      );
+
+      final HomeController homeController = Get.find();
+      await homeController.updateUserModel();
+      Get.back();
+      showCustomSnackbar(
+          title: "Congratulations",
+          message: "Your image is now on Billeddeling!");
     } else {
       showCustomSnackbar(
         title: "Alert",
