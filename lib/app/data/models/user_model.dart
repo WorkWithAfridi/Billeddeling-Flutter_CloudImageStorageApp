@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -17,8 +18,10 @@ class UserModel {
     this.email = "",
     this.imageList = const [],
   });
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  factory UserModel.fromJson(DocumentSnapshot doc) {
+    var json = doc.data() as Map<String, dynamic>;
+    return _$UserModelFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(const BilleddelingApp());
 }
 

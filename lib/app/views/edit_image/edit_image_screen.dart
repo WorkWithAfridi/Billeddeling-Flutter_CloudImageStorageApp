@@ -95,6 +95,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
                 buttonColor: navyBlue,
                 iconSize: 18,
                 callBackFunction: () {},
+                isLoading: false,
               )
             ],
           ),

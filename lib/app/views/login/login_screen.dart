@@ -48,18 +48,22 @@ class _LoginScreenState extends State<LoginScreen> {
               buttonColor: navyBlue,
               iconSize: 30,
               callBackFunction: controller.onLoginWithFacebookButtonClick,
+              isLoading: false,
             ),
             const SizedBox(
               height: 5,
             ),
-            CustomButton(
-              title: "Login with Google",
-              titleColor: Colors.white,
-              icon: FontAwesomeIcons.google,
-              iconColor: Colors.white,
-              buttonColor: red,
-              iconSize: 25,
-              callBackFunction: () {},
+            Obx(
+              () => CustomButton(
+                title: "Login with Google",
+                titleColor: Colors.white,
+                icon: FontAwesomeIcons.google,
+                iconColor: Colors.white,
+                buttonColor: red,
+                iconSize: 25,
+                callBackFunction: controller.onLoginWithGoogleButtonClick,
+                isLoading: controller.isLoginWithGoogleButtonLoading.value,
+              ),
             ),
             const SizedBox(
               height: 10,

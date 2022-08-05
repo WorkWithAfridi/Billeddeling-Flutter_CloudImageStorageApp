@@ -50,9 +50,19 @@ class IntroductionTab extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: controller.openProfilePopUp,
-          child: const CircleAvatar(
+          child: CircleAvatar(
             backgroundColor: navyBlue,
             radius: 25,
+            child: CircleAvatar(
+              radius: 23,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(23),
+                child: Image.network(
+                  controller.user.profilePicUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -70,7 +80,7 @@ class IntroductionTab extends StatelessWidget {
                       style: regularTextStyle,
                     ),
                     TextSpan(
-                      text: "Khondakar Afridi",
+                      text: controller.user.name,
                       style: semiBoldTextStyle.copyWith(color: red),
                     )
                   ],

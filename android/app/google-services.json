@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "497099177167",
-    "project_id": "billeddelingapp",
-    "storage_bucket": "billeddelingapp.appspot.com"
+    "project_number": "1012486627585",
+    "project_id": "billeddelingapp-e2467",
+    "storage_bucket": "billeddelingapp-e2467.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:497099177167:android:a346af9147d36d70c88bba",
+        "mobilesdk_app_id": "1:1012486627585:android:7875a5a34f67f7e8bbbb00",
         "android_client_info": {
           "package_name": "com.workwithafridi.billeddeling"
         }
       },
       "oauth_client": [
         {
-          "client_id": "497099177167-55jpdtfdelnbinvlo34vjq7rbh1662pf.apps.googleusercontent.com",
+          "client_id": "1012486627585-rbc46u55kooem5u6bf5d5cf5c9hmv9qc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.workwithafridi.billeddeling",
+            "certificate_hash": "c5bea0a32f7c9a02981ee3460c204f55779dfe00"
+          }
+        },
+        {
+          "client_id": "1012486627585-m1im1rh9tsikh07ceo76671aqoout2sq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4un_Yeoa2NaZfzO9tJ8mtfrG9VV8o65M"
+          "current_key": "AIzaSyAGR0g1oDlPwzyM9JJwFkqrdEXCIZwpr_E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "497099177167-55jpdtfdelnbinvlo34vjq7rbh1662pf.apps.googleusercontent.com",
+              "client_id": "1012486627585-m1im1rh9tsikh07ceo76671aqoout2sq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

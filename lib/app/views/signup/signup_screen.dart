@@ -52,18 +52,22 @@ class _SignupScreenState extends State<SignupScreen> {
               buttonColor: navyBlue,
               iconSize: 30,
               callBackFunction: () {},
+              isLoading: false,
             ),
             const SizedBox(
               height: 5,
             ),
-            CustomButton(
-              title: "Signup with Google",
-              titleColor: Colors.white,
-              icon: FontAwesomeIcons.google,
-              iconColor: Colors.white,
-              buttonColor: red,
-              iconSize: 25,
-              callBackFunction: () {},
+            Obx(
+              () => CustomButton(
+                title: "Signup with Google",
+                titleColor: Colors.white,
+                icon: FontAwesomeIcons.google,
+                iconColor: Colors.white,
+                buttonColor: red,
+                iconSize: 25,
+                callBackFunction: controller.onSignupWithGoogleButtonClick,
+                isLoading: controller.isSignupWithGoogleButtonLoading.value,
+              ),
             ),
             const SizedBox(
               height: 10,

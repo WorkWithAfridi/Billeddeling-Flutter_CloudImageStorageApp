@@ -1,4 +1,5 @@
 import 'package:billeddeling/app/routing/routes.dart';
+import 'package:billeddeling/app/services/authentication_services.dart';
 import 'package:get/get.dart';
 
 class SplashBinding extends Bindings {
@@ -15,6 +16,10 @@ class SplashController extends GetxController {
         seconds: 2,
       ),
     );
-    Get.offNamed(ROUTES.getLoginRoute);
+    if (await AuthenticationServices().isUserSignedIn()) {
+      Get.offNamed(ROUTES.getHomeRoute);
+    } else {
+      Get.offNamed(ROUTES.getLoginRoute);
+    }
   }
 }

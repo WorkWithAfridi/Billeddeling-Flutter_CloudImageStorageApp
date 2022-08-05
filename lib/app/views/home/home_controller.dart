@@ -1,5 +1,8 @@
 import 'package:billeddeling/app/data/constants/animations.dart';
+import 'package:billeddeling/app/data/models/user_model.dart';
 import 'package:billeddeling/app/routing/routes.dart';
+import 'package:billeddeling/app/services/authentication_services.dart';
+import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +20,8 @@ class HomeBinding extends Bindings {
 class HomeController extends GetxController {
   var currentHomePageIndex = 0.obs;
   var homePagePageController = PageController(initialPage: 0);
+  UserModel user = AuthenticationServices().user!;
+
   onPageChange(int index) {
     currentHomePageIndex.value = index;
     homePagePageController.animateToPage(
@@ -140,19 +145,26 @@ class HomeController extends GetxController {
               children: [
                 CircleAvatar(
                   backgroundColor: navyBlue,
-                  radius: Get.width / 4,
+                  radius: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.network(
+                      user.profilePicUrl,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  "Khondakar Afridi",
+                  user.name,
                   style: semiBoldTextStyle.copyWith(
                     fontSize: 16,
                   ),
                 ),
                 Text(
-                  'kyoto@gmail.com',
+                  user.email ?? "",
                   style: regularTextStyle.copyWith(fontSize: 12),
                 ),
               ],
@@ -176,7 +188,14 @@ class HomeController extends GetxController {
                   ),
                 ],
               ),
-              onPressed: () async {},
+              onPressed: () async {
+                if (await AuthenticationServices().logoutUser()) {
+                  Get.offAllNamed(ROUTES.getLoginRoute);
+                } else {
+                  showCustomSnackbar(
+                      title: "Error", message: "Sorry couldn't log you out!");
+                }
+              },
             ),
           ],
         );
