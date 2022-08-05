@@ -1,10 +1,13 @@
 import 'package:billeddeling/app/data/constants/animations.dart';
 import 'package:billeddeling/app/data/theme/theme.dart';
 import 'package:billeddeling/app/routing/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const BilleddelingApp());
 }
 

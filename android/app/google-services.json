@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "497099177167",
+    "project_id": "billeddelingapp",
+    "storage_bucket": "billeddelingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497099177167:android:a346af9147d36d70c88bba",
+        "android_client_info": {
+          "package_name": "com.workwithafridi.billeddeling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497099177167-55jpdtfdelnbinvlo34vjq7rbh1662pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4un_Yeoa2NaZfzO9tJ8mtfrG9VV8o65M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497099177167-55jpdtfdelnbinvlo34vjq7rbh1662pf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
