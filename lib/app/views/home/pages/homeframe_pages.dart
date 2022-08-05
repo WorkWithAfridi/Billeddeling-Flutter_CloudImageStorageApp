@@ -5,5 +5,5 @@ import 'homepage.dart';
 
 List<Widget> pages = [
   const Homepage(),
-  const OnlineGalleryPage(),
+  OnlineGalleryPage(),
 ];

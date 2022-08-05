@@ -33,7 +33,10 @@ class SearchScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: CustomTextField(),
+                  child: CustomTextField(
+                    textEditingController: TextEditingController(),
+                    title: "Enter search query...",
+                  ),
                 ),
                 const SizedBox(
                   width: 6,

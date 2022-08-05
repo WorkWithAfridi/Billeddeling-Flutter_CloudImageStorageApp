@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:billeddeling/app/data/constants/animations.dart';
 import 'package:billeddeling/app/data/models/user_model.dart';
 import 'package:billeddeling/app/routing/routes.dart';
@@ -6,6 +8,7 @@ import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:selectcropcompressimage/selectcropcompressimage.dart';
 
 import '../../data/constants/colors.dart';
 import '../../data/constants/fonts.dart';
@@ -21,6 +24,7 @@ class HomeController extends GetxController {
   var currentHomePageIndex = 0.obs;
   var homePagePageController = PageController(initialPage: 0);
   UserModel user = AuthenticationServices().user!;
+  Uint8List? image;
 
   onPageChange(int index) {
     currentHomePageIndex.value = index;
@@ -32,6 +36,8 @@ class HomeController extends GetxController {
       curve: appAnimationCurve,
     );
   }
+
+  SelectCropCompressImage selectCropCompressImage = SelectCropCompressImage();
 
   Future<void> selectImageSource() {
     return showDialog(
@@ -79,8 +85,19 @@ class HomeController extends GetxController {
                 ],
               ),
               onPressed: () async {
-                Get.back();
-                Get.to(() => const EditImageScreen());
+                image = await selectCropCompressImage
+                    .selectCropCompressImageFromGallery(
+                        compressionAmount: 70, context: context);
+                if (image != null) {
+                  await Get.to(
+                    () => EditImageScreen(
+                      image: image!,
+                    ),
+                  );
+                  Get.back();
+                } else {
+                  Get.back();
+                }
               },
             ),
             SimpleDialogOption(
@@ -100,7 +117,21 @@ class HomeController extends GetxController {
                   ),
                 ],
               ),
-              onPressed: () async {},
+              onPressed: () async {
+                image = await selectCropCompressImage
+                    .selectCropCompressImageFromCamera(
+                        compressionAmount: 70, context: context);
+                if (image != null) {
+                  await Get.to(
+                    () => EditImageScreen(
+                      image: image!,
+                    ),
+                  );
+                  Get.back();
+                } else {
+                  Get.back();
+                }
+              },
             ),
             SimpleDialogOption(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

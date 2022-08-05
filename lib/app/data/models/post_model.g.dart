@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'image_model.dart';
+part of 'post_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
+PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       imageId: json['imageId'] as String,
       userId: json['userId'] as String,
       title: json['title'] as String,
@@ -14,8 +14,7 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
       url: json['url'] as String,
     );
 
-Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'imageId': instance.imageId,
       'userId': instance.userId,
       'title': instance.title,

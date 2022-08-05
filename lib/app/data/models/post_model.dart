@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'image_model.g.dart';
+part 'post_model.g.dart';
 
 @JsonSerializable()
-class ImageModel {
+class PostModel {
   late String imageId;
   late String userId;
   late String title;
   late String date;
   late String url;
-  ImageModel({
+  PostModel({
     required this.imageId,
     required this.userId,
     required this.title,
     required this.date,
     required this.url,
   });
-  factory ImageModel.fromJson(DocumentSnapshot doc) {
+  factory PostModel.fromJson(DocumentSnapshot doc) {
     var json = doc.data() as Map<String, dynamic>;
-    return _$ImageModelFromJson(json);
+    return _$PostModelFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$ImageModelToJson(this);
+  Map<String, dynamic> toJson() => _$PostModelToJson(this);
 }

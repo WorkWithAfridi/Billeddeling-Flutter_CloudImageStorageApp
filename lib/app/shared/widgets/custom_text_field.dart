@@ -8,21 +8,23 @@ import '../../data/constants/fonts.dart';
 class CustomTextField extends StatelessWidget {
   CustomTextField({
     Key? key,
-    this.isData = false,
+    required this.textEditingController,
+    required this.title,
   }) : super(key: key);
-
-  bool isData;
+  TextEditingController textEditingController;
+  String title;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: textEditingController,
       style: regularTextStyle,
       cursorColor: red,
       maxLines: 1,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        hintText: "Enter title for the image...",
+        hintText: title,
         hintStyle: regularTextStyle,
         border: OutlineInputBorder(
           borderSide: Divider.createBorderSide(
@@ -51,22 +53,6 @@ class CustomTextField extends StatelessWidget {
         fillColor: navyBlue.withOpacity(.05),
         filled: true,
         contentPadding: const EdgeInsets.all(10),
-        suffix: isData
-            ? Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: navyBlue,
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                ),
-                child: Text(
-                  "TODAY",
-                  style: mediumTextStyle.copyWith(
-                    color: white,
-                  ),
-                ),
-              )
-            : const SizedBox.shrink(),
       ),
     );
   }

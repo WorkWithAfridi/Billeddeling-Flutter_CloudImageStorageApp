@@ -24,11 +24,11 @@ class Homepage extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const AccountStatusTab(),
+        AccountStatusTab(),
         const SizedBox(
           height: 5,
         ),
-        const ImageBrowserTab(),
+        ImageBrowserTab(),
         const SizedBox(
           height: 30,
         ),
@@ -114,10 +114,11 @@ class IntroductionTab extends StatelessWidget {
 }
 
 class ImageBrowserTab extends StatelessWidget {
-  const ImageBrowserTab({
+  ImageBrowserTab({
     Key? key,
   }) : super(key: key);
 
+  final HomeController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -133,23 +134,34 @@ class ImageBrowserTab extends StatelessWidget {
         const SizedBox(
           height: 2,
         ),
-        ListView.builder(
-          itemCount: 10,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return const ImageTile();
-          },
-        ),
+        controller.user.imageList!.length.toString() == "0"
+            ? Text(
+                "You do not have any images shared on Billeddeling.Upload and share images to view them here!",
+                style: regularTextStyle.copyWith(
+                  color: grey,
+                  height: .9,
+                ),
+                textAlign: TextAlign.start,
+              )
+            : ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return const ImageTile();
+                },
+              ),
       ],
     );
   }
 }
 
 class AccountStatusTab extends StatelessWidget {
-  const AccountStatusTab({
+  AccountStatusTab({
     Key? key,
   }) : super(key: key);
+
+  final HomeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +185,7 @@ class AccountStatusTab extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "115",
+                controller.user.imageList!.length.toString(),
                 style: semiBoldTextStyle.copyWith(
                   color: red,
                   fontSize: 30,
