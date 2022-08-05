@@ -14,6 +14,7 @@ class BilleddelingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: ROUTES.getSplashRoute,
       getPages: ROUTES.routes,
       defaultTransition: appAnimationTransition,

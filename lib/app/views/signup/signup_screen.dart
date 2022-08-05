@@ -16,7 +16,9 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
   final SignupController controller = Get.find();
+  
   @override
   void dispose() {
     Get.delete<SignupController>();
