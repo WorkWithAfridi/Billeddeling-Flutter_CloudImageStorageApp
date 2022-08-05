@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../data/constants/dimentions.dart';
 import '../../data/constants/fonts.dart';
@@ -32,7 +31,6 @@ class CustomButton extends StatelessWidget {
       },
       child: Container(
         height: 50,
-        width: Get.width * .7,
         decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(customBorderRadius),
