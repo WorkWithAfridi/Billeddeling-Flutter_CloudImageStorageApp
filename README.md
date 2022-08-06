@@ -27,6 +27,8 @@ Just send in your pull req. I'll for sure have a look into it. :)
 
 APKs can be found: [here](https://drive.google.com/drive/folders/1uJOkFjLKxMm0jRECrq9ruT29ZszCIt4z?usp=sharing)
 
+Debug and Release APK files can also be found in the github apk_files directory.
+
 ## Firebase Firestore Architecture Structure
 
 - users -> List of users with their properties.
