@@ -11,9 +11,9 @@ A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. W
 
 ## Demo video and in-app screenshots
 
-* [IUBRSA Demo Video - TO be uploaded](https://sites.google.com/view/workwithafridi)
+* [IUBRSA Demo Video](https://youtu.be/Mregnso6uLg)
 
-![Demo Image - TO be uploaded](https://sites.google.com/view/workwithafridi)
+![Demo Image](https://github.com/llKYOTOll/Billeddeling_Tikweb_TechnicalCodingTest_App/blob/master/assets/promotional_image/promotional_img.png?raw=true)
 
 ## How to install the app on your physical device
 
