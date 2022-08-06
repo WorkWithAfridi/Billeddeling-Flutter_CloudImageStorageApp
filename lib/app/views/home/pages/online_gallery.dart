@@ -32,61 +32,68 @@ class OnlineGalleryPage extends StatelessWidget {
         const SizedBox(
           height: 4,
         ),
-        controller.user.imageList!.length.toString() == "0"
-            ? Text(
-                "You do not have any images shared on Billeddeling.Upload and share images to view them here!",
-                style: regularTextStyle.copyWith(
-                  color: grey,
-                  height: .9,
-                ),
-                textAlign: TextAlign.start,
-              )
-            : StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('posts')
-                    .where(
-                      "userId",
-                      isEqualTo: AuthenticationServices().user!.userId,
-                    )
-                    .snapshots(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return GridView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.data!.docs.length,
-                    gridDelegate: SliverQuiltedGridDelegate(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 4,
-                      crossAxisSpacing: 4,
-                      repeatPattern: QuiltedGridRepeatPattern.inverted,
-                      pattern: [
-                        const QuiltedGridTile(2, 2),
-                        const QuiltedGridTile(1, 1),
-                        const QuiltedGridTile(1, 1),
-                        const QuiltedGridTile(1, 2),
-                      ],
+        GetBuilder<HomeController>(
+          init: controller,
+          initState: (_) {},
+          builder: (_) {
+            return controller.user.imageList!.length.toString() == "0"
+                ? Text(
+                    "You do not have any images shared on Billeddeling.Upload and share images to view them here!",
+                    style: regularTextStyle.copyWith(
+                      color: grey,
+                      height: .9,
                     ),
-                    itemBuilder: (context, index) {
-                      PostModel postModel =
-                          PostModel.fromJson(snapshot.data!.docs[index]);
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(customBorderRadius),
-                        child: Image.network(
-                          postModel.url,
-                          fit: BoxFit.fill,
+                    textAlign: TextAlign.start,
+                  )
+                : StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .where(
+                          "userId",
+                          isEqualTo: AuthenticationServices().user!.userId,
+                        )
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: snapshot.data!.docs.length,
+                        gridDelegate: SliverQuiltedGridDelegate(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          repeatPattern: QuiltedGridRepeatPattern.inverted,
+                          pattern: [
+                            const QuiltedGridTile(2, 2),
+                            const QuiltedGridTile(1, 1),
+                            const QuiltedGridTile(1, 1),
+                            const QuiltedGridTile(1, 2),
+                          ],
                         ),
+                        itemBuilder: (context, index) {
+                          PostModel postModel =
+                              PostModel.fromJson(snapshot.data!.docs[index]);
+                          return ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(customBorderRadius),
+                            child: Image.network(
+                              postModel.url,
+                              fit: BoxFit.fill,
+                            ),
+                          );
+                        },
                       );
                     },
                   );
-                },
-              ),
+          },
+        ),
         const SizedBox(
           height: 35,
         ),

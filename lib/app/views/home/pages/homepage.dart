@@ -137,45 +137,51 @@ class ImageBrowserModule extends StatelessWidget {
         const SizedBox(
           height: 2,
         ),
-        controller.user.imageList!.length.toString() == "0"
-            ? Text(
-                "You do not have any images shared on Billeddeling yet. Upload and share images to view them here!",
-                style: regularTextStyle.copyWith(
-                  color: grey,
-                  height: .9,
-                ),
-                textAlign: TextAlign.start,
-              )
-            : StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('posts')
-                    .where(
-                      "userId",
-                      isEqualTo: controller.user.userId,
-                    )
-                    .snapshots(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      PostModel postModel =
-                          PostModel.fromJson(snapshot.data!.docs[index]);
-                      return ImageTile(
-                        postModel: postModel,
+        GetBuilder<HomeController>(
+          init: controller,
+          initState: (_) {},
+          builder: (_) {
+            return controller.user.imageList!.length.toString() == "0"
+                ? Text(
+                    "You do not have any images shared on Billeddeling yet. Upload and share images to view them here!",
+                    style: regularTextStyle.copyWith(
+                      color: grey,
+                      height: .9,
+                    ),
+                    textAlign: TextAlign.start,
+                  )
+                : StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .where(
+                          "userId",
+                          isEqualTo: controller.user.userId,
+                        )
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          PostModel postModel =
+                              PostModel.fromJson(snapshot.data!.docs[index]);
+                          return ImageTile(
+                            postModel: postModel,
+                          );
+                        },
                       );
                     },
                   );
-                },
-              )
+          },
+        )
       ],
     );
   }
