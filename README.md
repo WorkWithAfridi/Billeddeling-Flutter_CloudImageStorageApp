@@ -25,7 +25,7 @@ Just send in your pull req. I'll for sure have a look into it. :)
 
 ## APKs
 
-APKs can be found [here] (https://drive.google.com/drive/folders/1uJOkFjLKxMm0jRECrq9ruT29ZszCIt4z?usp=sharing)
+APKs can be found: [here](https://drive.google.com/drive/folders/1uJOkFjLKxMm0jRECrq9ruT29ZszCIt4z?usp=sharing)
 
 ## Firebase Firestore Architecture Structure
 
