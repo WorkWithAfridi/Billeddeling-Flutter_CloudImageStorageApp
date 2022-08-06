@@ -66,7 +66,7 @@ class ImageTile extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                controller.onEditImageButtonClick(postModel);
+                controller.onEditImageTileButtonClick(postModel);
               },
               child: Container(
                 height: 30,
@@ -85,17 +85,22 @@ class ImageTile extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.red,
-              ),
-              child: const Icon(
-                Icons.delete,
-                size: 15,
-                color: white,
+            GestureDetector(
+              onTap: () {
+                controller.onDeleteImageTileButtonClick(postModel);
+              },
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.red,
+                ),
+                child: const Icon(
+                  Icons.delete,
+                  size: 15,
+                  color: white,
+                ),
               ),
             ),
           ],

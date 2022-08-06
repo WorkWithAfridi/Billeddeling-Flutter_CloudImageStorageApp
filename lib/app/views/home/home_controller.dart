@@ -5,6 +5,7 @@ import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/data/models/user_model.dart';
 import 'package:billeddeling/app/routing/routes.dart';
 import 'package:billeddeling/app/services/authentication_services.dart';
+import 'package:billeddeling/app/services/image_services.dart';
 import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_screen.dart';
 import 'package:flutter/material.dart';
@@ -243,12 +244,22 @@ class HomeController extends GetxController {
     Get.toNamed(ROUTES.getSearchScreenRoute);
   }
 
-  onEditImageButtonClick(PostModel postModel) {
+  onEditImageTileButtonClick(PostModel postModel) {
     Get.to(
       () => EditImageScreen(
         postModel: postModel,
         isEdit: true,
       ),
+    );
+  }
+
+  onDeleteImageTileButtonClick(PostModel postModel) async {
+    await ImageServices().deletePost(postModel);
+    await updateUserModel();
+    showCustomSnackbar(
+      title: "Success",
+      message: "Post Deleted!",
+      isSuccess: true,
     );
   }
 }

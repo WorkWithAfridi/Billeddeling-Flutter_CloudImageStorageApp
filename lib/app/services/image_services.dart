@@ -4,7 +4,6 @@ import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageServices {
@@ -21,6 +20,18 @@ class ImageServices {
       'title': title,
       'date': date,
     });
+  }
+
+  deletePost(PostModel postModel) async {
+    await _firebaseFirestore.collection('posts').doc(postModel.postId).delete();
+    await _storage.refFromURL(postModel.url).delete();
+    await _firebaseFirestore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .update({
+      'imageList': FieldValue.arrayRemove([postModel.postId]),
+    });
+    return;
   }
 
   uploadPost(Uint8List image, String title, String date) async {
@@ -46,23 +57,14 @@ class ImageServices {
     }
   }
 
-  Future _updateUserImageList(String postId, String mode) async {
-    if (mode == "add") {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayUnion([postId])
-      });
-      Icons.assignment_return_outlined;
-    } else {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayRemove([postId])
-      });
-    }
+  Future _updateUserImageListWithNewPostId(String postId) async {
+    await _firebaseFirestore
+        .collection('users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .update({
+      'imageList': FieldValue.arrayUnion([postId])
+    });
+    return;
   }
 
   Future _uploadImageToFirebaseStorage(Uint8List image, String imageId) async {
@@ -85,7 +87,7 @@ class ImageServices {
         .collection("posts")
         .doc(postModel.postId)
         .set(postModel.toJson());
-    await _updateUserImageList(postModel.postId, 'add');
+    await _updateUserImageListWithNewPostId(postModel.postId);
     return;
   }
 }

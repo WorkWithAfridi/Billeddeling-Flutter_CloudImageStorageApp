@@ -44,7 +44,7 @@ showCustomSnackbar({
         height: .95,
       ),
     ),
-    borderWidth: 20,
+    borderWidth: 15,
     isDismissible: true,
     dismissDirection: DismissDirection.horizontal,
     icon: Padding(

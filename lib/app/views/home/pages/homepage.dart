@@ -224,7 +224,7 @@ class AccountStatusModule extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                width: 5,
+                width: 8,
               ),
               Expanded(
                 child: Text(
