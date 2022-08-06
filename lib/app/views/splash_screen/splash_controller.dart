@@ -10,7 +10,7 @@ class SplashBinding extends Bindings {
 }
 
 class SplashController extends GetxController {
-  triggerSplashScreen() async {
+  Future triggerSplashScreen() async {
     await Future.delayed(
       const Duration(
         seconds: 2,

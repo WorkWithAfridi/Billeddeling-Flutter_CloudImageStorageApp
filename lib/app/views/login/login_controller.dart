@@ -19,7 +19,7 @@ class LoginController extends GetxController {
     Get.toNamed(ROUTES.getSignupRoute);
   }
 
-  onLoginWithFacebookButtonClick() async {
+  Future onLoginWithFacebookButtonClick() async {
     isLoginWithFacebookButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -38,7 +38,7 @@ class LoginController extends GetxController {
     isLoginWithFacebookButtonLoading.value = false;
   }
 
-  onLoginWithGoogleButtonClick() async {
+  Future onLoginWithGoogleButtonClick() async {
     isLoginWithGoogleButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {

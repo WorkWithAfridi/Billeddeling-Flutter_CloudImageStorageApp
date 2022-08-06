@@ -253,7 +253,7 @@ class HomeController extends GetxController {
     );
   }
 
-  onDeleteImageTileButtonClick(PostModel postModel) async {
+  Future onDeleteImageTileButtonClick(PostModel postModel) async {
     await ImageServices().deletePost(postModel);
     await updateUserModel();
     showCustomSnackbar(

@@ -15,14 +15,14 @@ class ImageServices {
   static final ImageServices _imageServices = ImageServices._internal();
   factory ImageServices() => _imageServices;
 
-  updatePost(String postId, String title, String date) async {
+  Future updatePost(String postId, String title, String date) async {
     await _firebaseFirestore.collection('posts').doc(postId).update({
       'title': title,
       'date': date,
     });
   }
 
-  deletePost(PostModel postModel) async {
+  Future deletePost(PostModel postModel) async {
     await _firebaseFirestore.collection('posts').doc(postModel.postId).delete();
     await _storage.refFromURL(postModel.url).delete();
     _updateUserImageList(
@@ -32,7 +32,7 @@ class ImageServices {
     return;
   }
 
-  uploadPost(Uint8List image, String title, String date) async {
+  Future uploadPost(Uint8List image, String title, String date) async {
     try {
       String imageId = const Uuid().v1();
       String imageUrl = await _uploadImageToFirebaseStorage(

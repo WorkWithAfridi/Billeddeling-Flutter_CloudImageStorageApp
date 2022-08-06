@@ -57,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
 }
 
 class ResultModule extends StatelessWidget {
- ResultModule({
+  ResultModule({
     Key? key,
   }) : super(key: key);
 
@@ -88,16 +88,13 @@ class ResultModule extends StatelessWidget {
                         .collection('posts')
                         .where(
                           "userId",
-                          isEqualTo:
-                              AuthenticationServices().user!.userId,
+                          isEqualTo: AuthenticationServices().user!.userId,
                         )
                         .snapshots(),
                     builder: (context,
-                        AsyncSnapshot<
-                                QuerySnapshot<Map<String, dynamic>>>
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                             snapshot) {
-                      if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
@@ -108,8 +105,7 @@ class ResultModule extends StatelessWidget {
                         builder: (_) {
                           return ListView.builder(
                             itemCount: snapshot.data!.docs.length,
-                            physics:
-                                const NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               PostModel postModel = PostModel.fromJson(

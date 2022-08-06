@@ -17,7 +17,7 @@ class EditImageScreenController extends GetxController {
   var isUploadButtonLoading = false.obs;
   var selectedDate = "Select Date: ".obs;
 
-  selectDate() async {
+  Future selectDate() async {
     var eventDate = await showDatePicker(
       context: Get.context!,
       initialDate: DateTime.now(),
@@ -35,7 +35,7 @@ class EditImageScreenController extends GetxController {
     dateTextEditingController.text = selectedDate.value;
   }
 
-  onUploadButtonClick() async {
+  Future onUploadButtonClick() async {
     isUploadButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     if (selectedDate.value != "Select Date: " &&
@@ -65,7 +65,7 @@ class EditImageScreenController extends GetxController {
     isUploadButtonLoading.value = false;
   }
 
-  onUpdateButtonClick() async {
+  Future onUpdateButtonClick() async {
     isUploadButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     if (selectedDate.value != "Select Date: " &&

@@ -39,7 +39,7 @@ class ROUTES {
     ),
     GetPage(
       name: getSearchScreenRoute,
-      page: () => SearchScreen(),
+      page: () => const SearchScreen(),
       binding: SearchBinding(),
     )
   ];

@@ -21,7 +21,7 @@ class SignupController extends GetxController {
   var isSignupWithGoogleButtonLoading = false.obs;
   var isSignupWithFacebookButtonLoading = false.obs;
 
-  onSignupWithGoogleButtonClick() async {
+  Future onSignupWithGoogleButtonClick() async {
     isSignupWithGoogleButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -40,7 +40,7 @@ class SignupController extends GetxController {
     isSignupWithGoogleButtonLoading.value = false;
   }
 
-  onLoginWithFacebookButtonClick() async {
+  Future onLoginWithFacebookButtonClick() async {
     isSignupWithFacebookButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {
