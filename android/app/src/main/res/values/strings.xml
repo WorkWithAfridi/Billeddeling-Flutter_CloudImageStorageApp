@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BilleddelingApp</string>
+    <string name="facebook_app_id">591612649006825</string>
+    <string name="fb_login_protocol_scheme">fb591612649006825</string>
+    <string name="facebook_client_token">46720fcac67400a5aea6d35864da6e65</string>
+</resources>

@@ -44,15 +44,17 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(
               height: 10,
             ),
-            CustomButton(
-              title: "Signup with Facebook",
-              titleColor: Colors.white,
-              icon: Icons.facebook,
-              iconColor: Colors.white,
-              buttonColor: navyBlue,
-              iconSize: 30,
-              callBackFunction: () {},
-              isLoading: false,
+            Obx(
+              () => CustomButton(
+                title: "Signup with Facebook",
+                titleColor: Colors.white,
+                icon: Icons.facebook,
+                iconColor: Colors.white,
+                buttonColor: navyBlue,
+                iconSize: 30,
+                callBackFunction: () {},
+                isLoading: controller.isSignupWithFacebookButtonLoading.value,
+              ),
             ),
             const SizedBox(
               height: 5,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/constants/colors.dart';
-import '../../../data/constants/dimentions.dart';
 import '../home_controller.dart';
 
 class HomeframeBottonNavigationBar extends StatelessWidget {
@@ -21,7 +20,7 @@ class HomeframeBottonNavigationBar extends StatelessWidget {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        elevation: customElevation,
+        elevation: 5,
         currentIndex: controller.currentHomePageIndex.value,
         onTap: controller.onPageChange,
         items: const [

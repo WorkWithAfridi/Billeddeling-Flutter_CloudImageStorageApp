@@ -25,12 +25,10 @@ class ImageServices {
   deletePost(PostModel postModel) async {
     await _firebaseFirestore.collection('posts').doc(postModel.postId).delete();
     await _storage.refFromURL(postModel.url).delete();
-    await _firebaseFirestore
-        .collection('users')
-        .doc(_firebaseAuth.currentUser!.uid)
-        .update({
-      'imageList': FieldValue.arrayRemove([postModel.postId]),
-    });
+    _updateUserImageList(
+      postId: postModel.postId,
+      shouldAddPostIdToUserImageList: false,
+    );
     return;
   }
 
@@ -57,13 +55,25 @@ class ImageServices {
     }
   }
 
-  Future _updateUserImageListWithNewPostId(String postId) async {
-    await _firebaseFirestore
-        .collection('users')
-        .doc(_firebaseAuth.currentUser!.uid)
-        .update({
-      'imageList': FieldValue.arrayUnion([postId])
-    });
+  Future _updateUserImageList({
+    required String postId,
+    bool shouldAddPostIdToUserImageList = true,
+  }) async {
+    if (shouldAddPostIdToUserImageList) {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayUnion([postId])
+      });
+    } else {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayRemove([postId]),
+      });
+    }
     return;
   }
 
@@ -87,7 +97,7 @@ class ImageServices {
         .collection("posts")
         .doc(postModel.postId)
         .set(postModel.toJson());
-    await _updateUserImageListWithNewPostId(postModel.postId);
+    await _updateUserImageList(postId: postModel.postId);
     return;
   }
 }

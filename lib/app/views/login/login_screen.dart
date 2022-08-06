@@ -40,15 +40,17 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 10,
             ),
-            CustomButton(
-              title: "Login with Facebook",
-              titleColor: Colors.white,
-              icon: Icons.facebook,
-              iconColor: Colors.white,
-              buttonColor: navyBlue,
-              iconSize: 30,
-              callBackFunction: controller.onLoginWithFacebookButtonClick,
-              isLoading: false,
+            Obx(
+              () => CustomButton(
+                title: "Login with Facebook",
+                titleColor: Colors.white,
+                icon: Icons.facebook,
+                iconColor: Colors.white,
+                buttonColor: navyBlue,
+                iconSize: 30,
+                callBackFunction: controller.onLoginWithFacebookButtonClick,
+                isLoading: controller.isLoginWithFacebookButtonLoading.value,
+              ),
             ),
             const SizedBox(
               height: 5,

@@ -19,8 +19,9 @@ class SignupController extends GetxController {
   }
 
   var isSignupWithGoogleButtonLoading = false.obs;
+  var isSignupWithFacebookButtonLoading = false.obs;
 
-    onSignupWithGoogleButtonClick() async {
+  onSignupWithGoogleButtonClick() async {
     isSignupWithGoogleButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -37,5 +38,24 @@ class SignupController extends GetxController {
       log(err.toString());
     }
     isSignupWithGoogleButtonLoading.value = false;
+  }
+
+  onLoginWithFacebookButtonClick() async {
+    isSignupWithFacebookButtonLoading.value = true;
+    await Future.delayed(const Duration(seconds: 2));
+    try {
+      if (await AuthenticationServices().signinWithFacebook()) {
+        Get.toNamed(ROUTES.getHomeRoute);
+      } else {
+        showCustomSnackbar(
+          title: "Error",
+          message: "An error occurred while trying to log you in!",
+          isError: true,
+        );
+      }
+    } catch (err) {
+      log(err.toString());
+    }
+    isSignupWithFacebookButtonLoading.value = false;
   }
 }

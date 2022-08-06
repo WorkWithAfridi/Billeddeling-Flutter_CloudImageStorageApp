@@ -91,11 +91,11 @@ class _EditImageScreenState extends State<EditImageScreen> {
                         child: widget.isEdit
                             ? Image.network(
                                 controller.postModel!.url,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               )
                             : Image.memory(
                                 controller.image!,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               ),
                       ),
                     ),

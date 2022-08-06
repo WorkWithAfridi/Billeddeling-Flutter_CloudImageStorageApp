@@ -14,12 +14,28 @@ class LoginBinding extends Bindings {
 
 class LoginController extends GetxController {
   var isLoginWithGoogleButtonLoading = false.obs;
+  var isLoginWithFacebookButtonLoading = false.obs;
   onSignupButtonClick() {
     Get.toNamed(ROUTES.getSignupRoute);
   }
 
-  onLoginWithFacebookButtonClick() {
-    Get.offAllNamed(ROUTES.getHomeRoute);
+  onLoginWithFacebookButtonClick() async {
+    isLoginWithFacebookButtonLoading.value = true;
+    await Future.delayed(const Duration(seconds: 2));
+    try {
+      if (await AuthenticationServices().signinWithFacebook()) {
+        Get.toNamed(ROUTES.getHomeRoute);
+      } else {
+        showCustomSnackbar(
+          title: "Error",
+          message: "An error occurred while trying to log you in!",
+          isError: true,
+        );
+      }
+    } catch (err) {
+      log(err.toString());
+    }
+    isLoginWithFacebookButtonLoading.value = false;
   }
 
   onLoginWithGoogleButtonClick() async {

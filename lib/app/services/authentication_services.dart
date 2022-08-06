@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:billeddeling/app/data/models/user_model.dart';
+import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationServices {
@@ -59,29 +61,36 @@ class AuthenticationServices {
   }
 
   Future<bool> signinWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      if (userCredential.user != null) {
-        if (userCredential.additionalUserInfo!.isNewUser) {
-          return await signupWithGoogle(userCredential);
-        } else {
-          await getUserModel();
-          return true;
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        UserCredential userCredential =
+            await _firebaseAuth.signInWithCredential(credential);
+        if (userCredential.user != null) {
+          if (userCredential.additionalUserInfo!.isNewUser) {
+            return await _signupWithGoogle(userCredential);
+          } else {
+            await getUserModel();
+            return true;
+          }
         }
       }
+      return false;
+    } on FirebaseException catch (err) {
+      showCustomSnackbar(title: "Snap", message: err.message.toString());
+      return false;
+    } catch (err) {
+      return false;
     }
-    return false;
   }
 
-  Future signupWithGoogle(UserCredential userCredential) async {
+  Future _signupWithGoogle(UserCredential userCredential) async {
     return await _storeUserData(
       userId: userCredential.user!.uid,
       name: userCredential.user!.displayName ??
@@ -91,7 +100,39 @@ class AuthenticationServices {
     );
   }
 
-  Future loginWithFacebook() async {}
+  Future signinWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+      UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(facebookAuthCredential);
+      if (userCredential.user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          return await _signupWithFacebook(userCredential);
+        } else {
+          await getUserModel();
+          return true;
+        }
+      }
+      return false;
+    } on FirebaseException catch (err) {
+      showCustomSnackbar(title: "Snap", message: err.message.toString());
+      return false;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  Future _signupWithFacebook(UserCredential userCredential) async {
+    return await _storeUserData(
+      userId: userCredential.user!.uid,
+      name: userCredential.user!.displayName ??
+          userCredential.user!.email.toString(),
+      profilePicUrl: userCredential.user!.photoURL ?? "",
+      email: userCredential.user!.email ?? "",
+    );
+  }
 
   Future logoutUser() async {
     try {
