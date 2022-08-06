@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:billeddeling/app/data/constants/dimentions.dart';
 import 'package:billeddeling/app/data/constants/fonts.dart';
+import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/shared/widgets/custom_back_button.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,15 @@ import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
 class EditImageScreen extends StatefulWidget {
-  Uint8List image;
-  EditImageScreen({Key? key, required this.image}) : super(key: key);
+  Uint8List? image;
+  bool isEdit;
+  PostModel? postModel;
+  EditImageScreen({
+    Key? key,
+    this.image,
+    this.isEdit = false,
+    this.postModel,
+  }) : super(key: key);
 
   @override
   State<EditImageScreen> createState() => _EditImageScreenState();
@@ -36,6 +44,12 @@ class _EditImageScreenState extends State<EditImageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isEdit) {
+      controller.postModel = widget.postModel;
+      controller.titleTextEditingController.text = widget.postModel!.title;
+      controller.dateTextEditingController.text = widget.postModel!.date;
+      controller.selectedDate.value = widget.postModel!.date;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -74,33 +88,40 @@ class _EditImageScreenState extends State<EditImageScreen> {
                       width: double.maxFinite,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(customBorderRadius),
-                        child: Image.memory(
-                          controller.image!,
-                          fit: BoxFit.fill,
-                        ),
+                        child: widget.isEdit
+                            ? Image.network(
+                                controller.postModel!.url,
+                                fit: BoxFit.fill,
+                              )
+                            : Image.memory(
+                                controller.image!,
+                                fit: BoxFit.fill,
+                              ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 5,
-                      right: 5,
-                      child: Container(
-                        height: 40,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(customBorderRadius),
-                          color: navyBlue.withOpacity(.7),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Remove Image",
-                          style: mediumTextStyle.copyWith(
-                            color: white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    )
+                    widget.isEdit
+                        ? const SizedBox.shrink()
+                        : Positioned(
+                            bottom: 5,
+                            right: 5,
+                            child: Container(
+                              height: 40,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(customBorderRadius),
+                                color: navyBlue.withOpacity(.7),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Remove Image",
+                                style: mediumTextStyle.copyWith(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -108,7 +129,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
                 height: 15,
               ),
               Text(
-                "• Add a title",
+                widget.isEdit ? "Edit title" : "• Add a title",
                 style: semiBoldTextStyle.copyWith(
                   fontSize: 14,
                   color: black,
@@ -125,7 +146,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
                 height: 10,
               ),
               Text(
-                "• Add a date",
+                widget.isEdit ? "Edit date" : "• Add a date",
                 style: semiBoldTextStyle.copyWith(
                   fontSize: 14,
                   color: black,
@@ -194,13 +215,19 @@ class _EditImageScreenState extends State<EditImageScreen> {
               ),
               Obx(
                 () => CustomButton(
-                  title: "Upload Image",
+                  title: widget.isEdit ? "Update Post" : "Upload Image",
                   titleColor: white,
-                  icon: Icons.upload,
+                  icon: widget.isEdit ? Icons.update : Icons.upload,
                   iconColor: white,
                   buttonColor: red,
                   iconSize: 18,
-                  callBackFunction: controller.onUploadButtonClick,
+                  callBackFunction: () {
+                    if (widget.isEdit) {
+                      controller.onUpdateButtonClick();
+                    } else {
+                      controller.onUploadButtonClick();
+                    }
+                  },
                   isLoading: controller.isUploadButtonLoading.value,
                 ),
               )

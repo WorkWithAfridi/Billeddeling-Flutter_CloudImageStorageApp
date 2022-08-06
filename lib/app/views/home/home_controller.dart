@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:billeddeling/app/data/constants/animations.dart';
+import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/data/models/user_model.dart';
 import 'package:billeddeling/app/routing/routes.dart';
 import 'package:billeddeling/app/services/authentication_services.dart';
@@ -100,7 +101,6 @@ class HomeController extends GetxController {
                       image: image!,
                     ),
                   );
-                  update();
                 }
                 Get.back();
               },
@@ -133,7 +133,6 @@ class HomeController extends GetxController {
                       image: image!,
                     ),
                   );
-                  update();
                 } else {
                   Get.back();
                 }
@@ -242,5 +241,14 @@ class HomeController extends GetxController {
 
   onSearchButtonClick() {
     Get.toNamed(ROUTES.getSearchScreenRoute);
+  }
+
+  onEditImageButtonClick(PostModel postModel) {
+    Get.to(
+      () => EditImageScreen(
+        postModel: postModel,
+        isEdit: true,
+      ),
+    );
   }
 }

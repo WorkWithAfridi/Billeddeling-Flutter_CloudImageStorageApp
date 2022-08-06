@@ -8,11 +8,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthenticationServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  UserModel? user;
 
   AuthenticationServices._internal();
   static final AuthenticationServices _authenticationServices =
       AuthenticationServices._internal();
   factory AuthenticationServices() => _authenticationServices;
+
+  Future<bool> isUserSignedIn() async {
+    if (_firebaseAuth.currentUser != null) {
+      await getUserModel();
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Future<UserModel> getUserModel() async {
     User currentUser = _firebaseAuth.currentUser!;
@@ -20,28 +30,6 @@ class AuthenticationServices {
         await _firebaseFirestore.collection("users").doc(currentUser.uid).get();
     user = UserModel.fromJson(userDoc);
     return user!;
-  }
-
-  UserModel? user;
-
-  Future updateUserImageList(String postId, String mode) async {
-    if (mode == "add") {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayUnion([postId])
-      });
-      return true;
-    } else {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayRemove([postId])
-      });
-      return true;
-    }
   }
 
   Future _storeUserData({
@@ -104,15 +92,6 @@ class AuthenticationServices {
   }
 
   Future loginWithFacebook() async {}
-
-  Future<bool> isUserSignedIn() async {
-    if (_firebaseAuth.currentUser != null) {
-      await getUserModel();
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   Future logoutUser() async {
     try {

@@ -1,3 +1,5 @@
+import 'package:billeddeling/app/data/models/post_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -38,29 +40,49 @@ class OnlineGalleryPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.start,
               )
-            : GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 50,
-                gridDelegate: SliverQuiltedGridDelegate(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  repeatPattern: QuiltedGridRepeatPattern.inverted,
-                  pattern: [
-                    const QuiltedGridTile(2, 2),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 1),
-                    const QuiltedGridTile(1, 2),
-                  ],
-                ),
-                itemBuilder: (context, index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(customBorderRadius),
-                    child: Image.network(
-                      "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-                      fit: BoxFit.fill,
+            : StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .where(
+                      "userId",
+                      isEqualTo: controller.user.userId,
+                    )
+                    .snapshots(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data!.docs.length,
+                    gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 4,
+                      crossAxisSpacing: 4,
+                      repeatPattern: QuiltedGridRepeatPattern.inverted,
+                      pattern: [
+                        const QuiltedGridTile(2, 2),
+                        const QuiltedGridTile(1, 1),
+                        const QuiltedGridTile(1, 1),
+                        const QuiltedGridTile(1, 2),
+                      ],
                     ),
+                    itemBuilder: (context, index) {
+                      PostModel postModel =
+                          PostModel.fromJson(snapshot.data!.docs[index]);
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(customBorderRadius),
+                        child: Image.network(
+                          postModel.url,
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -69,28 +91,5 @@ class OnlineGalleryPage extends StatelessWidget {
         ),
       ],
     );
-
-    // GridView.custom(
-    //   shrinkWrap: true,
-    //   physics: const NeverScrollableScrollPhysics(),
-    //   gridDelegate: SliverQuiltedGridDelegate(
-    //     crossAxisCount: 4,
-    //     mainAxisSpacing: 4,
-    //     crossAxisSpacing: 4,
-    //     repeatPattern: QuiltedGridRepeatPattern.inverted,
-    //     pattern: [
-    //       const QuiltedGridTile(2, 2),
-    //       const QuiltedGridTile(1, 1),
-    //       const QuiltedGridTile(1, 1),
-    //       const QuiltedGridTile(1, 2),
-    //     ],
-    //   ),
-    //   childrenDelegate: SliverChildBuilderDelegate(
-    //     (context, index) => Image.network(
-    //       "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-    //       fit: BoxFit.fill,
-    //     ),
-    //   ),
-    // );
   }
 }

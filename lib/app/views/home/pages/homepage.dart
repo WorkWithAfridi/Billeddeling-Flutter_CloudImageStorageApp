@@ -22,15 +22,15 @@ class Homepage extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        IntroductionTab(),
+        IntroductionModule(),
         const SizedBox(
           height: 10,
         ),
-        AccountStatusTab(),
+        AccountStatusModule(),
         const SizedBox(
           height: 5,
         ),
-        ImageBrowserTab(),
+        ImageBrowserModule(),
         const SizedBox(
           height: 30,
         ),
@@ -39,8 +39,8 @@ class Homepage extends StatelessWidget {
   }
 }
 
-class IntroductionTab extends StatelessWidget {
-  IntroductionTab({
+class IntroductionModule extends StatelessWidget {
+  IntroductionModule({
     Key? key,
   }) : super(key: key);
 
@@ -61,7 +61,7 @@ class IntroductionTab extends StatelessWidget {
                 borderRadius: BorderRadius.circular(23),
                 child: Image.network(
                   controller.user.profilePicUrl,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -115,12 +115,13 @@ class IntroductionTab extends StatelessWidget {
   }
 }
 
-class ImageBrowserTab extends StatelessWidget {
-  ImageBrowserTab({
+class ImageBrowserModule extends StatelessWidget {
+  ImageBrowserModule({
     Key? key,
   }) : super(key: key);
 
   final HomeController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -138,63 +139,50 @@ class ImageBrowserTab extends StatelessWidget {
         ),
         controller.user.imageList!.length.toString() == "0"
             ? Text(
-                "You do not have any images shared on Billeddeling.Upload and share images to view them here!",
+                "You do not have any images shared on Billeddeling yet. Upload and share images to view them here!",
                 style: regularTextStyle.copyWith(
                   color: grey,
                   height: .9,
                 ),
                 textAlign: TextAlign.start,
               )
-            : GetBuilder<HomeController>(
-                init: HomeController(),
-                initState: (_) {},
-                builder: (_) {
-                  return StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('posts')
-                        .where(
-                          "postId",
-                          whereIn: controller.user.imageList,
-                        )
-                        .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: ((context, index) {
-                                PostModel postModel = PostModel.fromJson(
-                                    snapshot.data!.docs[index]);
-                                return ImageTile(
-                                  postModel: postModel,
-                                );
-                              }),
-                            ),
-                          ],
-                        ),
+            : StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .where(
+                      "userId",
+                      isEqualTo: controller.user.userId,
+                    )
+                    .snapshots(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      PostModel postModel =
+                          PostModel.fromJson(snapshot.data!.docs[index]);
+                      return ImageTile(
+                        postModel: postModel,
                       );
                     },
                   );
                 },
-              ),
+              )
       ],
     );
   }
 }
 
-class AccountStatusTab extends StatelessWidget {
-  AccountStatusTab({
+class AccountStatusModule extends StatelessWidget {
+  AccountStatusModule({
     Key? key,
   }) : super(key: key);
 

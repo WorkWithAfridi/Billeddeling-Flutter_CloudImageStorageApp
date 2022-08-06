@@ -1,17 +1,29 @@
 import 'dart:typed_data';
 
 import 'package:billeddeling/app/data/models/post_model.dart';
-import 'package:billeddeling/app/services/authentication_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageServices {
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  uploadImage(Uint8List image, String title, String date) async {
+
+  ImageServices._internal();
+  static final ImageServices _imageServices = ImageServices._internal();
+  factory ImageServices() => _imageServices;
+
+  updatePost(String postId, String title, String date) async {
+    await _firebaseFirestore.collection('posts').doc(postId).update({
+      'title': title,
+      'date': date,
+    });
+  }
+
+  uploadPost(Uint8List image, String title, String date) async {
     try {
       String imageId = const Uuid().v1();
       String imageUrl = await _uploadImageToFirebaseStorage(
@@ -22,19 +34,34 @@ class ImageServices {
       PostModel postModel = PostModel(
         postId: postId,
         imageId: imageId,
-        userId: _auth.currentUser!.uid,
+        userId: _firebaseAuth.currentUser!.uid,
         title: title,
         date: date,
         url: imageUrl,
       );
-      _firebaseFirestore
-          .collection("posts")
-          .doc(postId)
-          .set(postModel.toJson());
-      await AuthenticationServices().updateUserImageList(postId, 'add');
+      await _uploadPostToFirebaseFirestore(postModel);
       return true;
     } on FirebaseException {
       return false;
+    }
+  }
+
+  Future _updateUserImageList(String postId, String mode) async {
+    if (mode == "add") {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayUnion([postId])
+      });
+      Icons.assignment_return_outlined;
+    } else {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .update({
+        'imageList': FieldValue.arrayRemove([postId])
+      });
     }
   }
 
@@ -42,12 +69,23 @@ class ImageServices {
     Reference ref = _storage
         .ref()
         .child("images")
-        .child(_auth.currentUser!.uid)
+        .child(_firebaseAuth.currentUser!.uid)
         .child(imageId);
     UploadTask uploadTask = ref.putData(image);
 
     TaskSnapshot snap = await uploadTask;
     String imageUrl = await snap.ref.getDownloadURL();
     return imageUrl;
+  }
+
+  Future _uploadPostToFirebaseFirestore(
+    PostModel postModel,
+  ) async {
+    await _firebaseFirestore
+        .collection("posts")
+        .doc(postModel.postId)
+        .set(postModel.toJson());
+    await _updateUserImageList(postModel.postId, 'add');
+    return;
   }
 }

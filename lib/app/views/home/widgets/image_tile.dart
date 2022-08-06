@@ -1,16 +1,19 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
+import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/dimentions.dart';
 import '../../../data/constants/fonts.dart';
 
 class ImageTile extends StatelessWidget {
-  const ImageTile({
+  ImageTile({
     Key? key,
     required this.postModel,
   }) : super(key: key);
   final PostModel postModel;
+  final HomeController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -61,17 +64,22 @@ class ImageTile extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: navyBlue,
-              ),
-              child: const Icon(
-                Icons.edit,
-                size: 15,
-                color: white,
+            GestureDetector(
+              onTap: () {
+                controller.onEditImageButtonClick(postModel);
+              },
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: navyBlue,
+                ),
+                child: const Icon(
+                  Icons.edit,
+                  size: 15,
+                  color: white,
+                ),
               ),
             ),
             const SizedBox(
