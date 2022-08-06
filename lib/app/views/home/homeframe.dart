@@ -42,7 +42,7 @@ class _HomeframeState extends State<Homeframe> {
               "Your one stop solution\nfor cloud based image storage.",
               style: regularTextStyle.copyWith(
                 height: .7,
-                fontSize: 8,
+                fontSize: 10,
               ),
               textAlign: TextAlign.center,
             ),

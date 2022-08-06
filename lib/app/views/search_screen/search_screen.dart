@@ -44,121 +44,147 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              style: regularTextStyle,
-              cursorColor: red,
-              maxLines: 1,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-              onSubmitted: ((value) {
-                controller.searchQuery.value = value.toLowerCase();
-              }),
-              onChanged: ((value) {
-                controller.searchQuery.value = value.toLowerCase();
-              }),
-              decoration: InputDecoration(
-                hintText: "Enter search query",
-                hintStyle: regularTextStyle,
-                border: OutlineInputBorder(
-                  borderSide: Divider.createBorderSide(
-                    Get.context,
-                    color: grey,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: Divider.createBorderSide(
-                    Get.context,
-                    color: red,
-                    width: 2.5,
-                  ),
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: Divider.createBorderSide(
-                    Get.context,
-                    color: navyBlue,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(customBorderRadius),
-                ),
-                fillColor: navyBlue.withOpacity(.05),
-                filled: true,
-                contentPadding: const EdgeInsets.all(10),
-              ),
-            ),
+            SearchTextField(),
             const SizedBox(
               height: 10,
             ),
-            Obx(
-              () => controller.searchQuery.value == ""
-                  ? const SizedBox.shrink()
-                  : SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "• Search results",
-                            style: semiBoldTextStyle.copyWith(
-                              fontSize: 14,
-                              color: black,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('posts')
-                                .where(
-                                  "userId",
-                                  isEqualTo:
-                                      AuthenticationServices().user!.userId,
-                                )
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<
-                                        QuerySnapshot<Map<String, dynamic>>>
-                                    snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              return GetBuilder<SearchController>(
-                                init: controller,
-                                initState: (_) {},
-                                builder: (_) {
-                                  return ListView.builder(
-                                    itemCount: snapshot.data!.docs.length,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      PostModel postModel = PostModel.fromJson(
-                                          snapshot.data!.docs[index]);
-                                      return postModel.title
-                                              .toLowerCase()
-                                              .contains(controller.searchQuery)
-                                          ? ImageTile(
-                                              postModel: postModel,
-                                            )
-                                          : const SizedBox.shrink();
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-            )
+            ResultModule()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ResultModule extends StatelessWidget {
+ ResultModule({
+    Key? key,
+  }) : super(key: key);
+
+  final SearchController controller = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => controller.searchQuery.value == ""
+          ? const SizedBox.shrink()
+          : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "• Search results",
+                    style: semiBoldTextStyle.copyWith(
+                      fontSize: 14,
+                      color: black,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .where(
+                          "userId",
+                          isEqualTo:
+                              AuthenticationServices().user!.userId,
+                        )
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<
+                                QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GetBuilder<SearchController>(
+                        init: controller,
+                        initState: (_) {},
+                        builder: (_) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            physics:
+                                const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              PostModel postModel = PostModel.fromJson(
+                                  snapshot.data!.docs[index]);
+                              return postModel.title
+                                      .toLowerCase()
+                                      .contains(controller.searchQuery)
+                                  ? ImageTile(
+                                      postModel: postModel,
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+class SearchTextField extends StatelessWidget {
+  SearchTextField({
+    Key? key,
+  }) : super(key: key);
+
+  final SearchController controller = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      style: regularTextStyle,
+      cursorColor: red,
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.done,
+      onSubmitted: ((value) {
+        controller.searchQuery.value = value.toLowerCase();
+      }),
+      onChanged: ((value) {
+        controller.searchQuery.value = value.toLowerCase();
+      }),
+      decoration: InputDecoration(
+        hintText: "Enter search query",
+        hintStyle: regularTextStyle,
+        border: OutlineInputBorder(
+          borderSide: Divider.createBorderSide(
+            Get.context,
+            color: grey,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(customBorderRadius),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: Divider.createBorderSide(
+            Get.context,
+            color: red,
+            width: 2.5,
+          ),
+          borderRadius: BorderRadius.circular(customBorderRadius),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: Divider.createBorderSide(
+            Get.context,
+            color: navyBlue,
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(customBorderRadius),
+        ),
+        fillColor: navyBlue.withOpacity(.05),
+        filled: true,
+        contentPadding: const EdgeInsets.all(10),
       ),
     );
   }
