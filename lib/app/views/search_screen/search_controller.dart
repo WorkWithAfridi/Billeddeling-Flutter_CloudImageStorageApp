@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SearchBinding extends Bindings {
@@ -7,4 +8,6 @@ class SearchBinding extends Bindings {
   }
 }
 
-class SearchController extends GetxController {}
+class SearchController extends GetxController {
+  var searchQuery = "".obs;
+}
