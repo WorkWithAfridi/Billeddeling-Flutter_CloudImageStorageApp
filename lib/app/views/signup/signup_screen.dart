@@ -52,7 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 iconColor: Colors.white,
                 buttonColor: navyBlue,
                 iconSize: 30,
-                callBackFunction: () {},
+                callBackFunction: controller.onSignupWithFacebookButtonClick,
                 isLoading: controller.isSignupWithFacebookButtonLoading.value,
               ),
             ),

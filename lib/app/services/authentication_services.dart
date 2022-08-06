@@ -74,7 +74,9 @@ class AuthenticationServices {
             await _firebaseAuth.signInWithCredential(credential);
         if (userCredential.user != null) {
           if (userCredential.additionalUserInfo!.isNewUser) {
-            return await _signupWithGoogle(userCredential);
+            await _signupWithGoogle(userCredential);
+            await getUserModel();
+            return true;
           } else {
             await getUserModel();
             return true;
@@ -109,7 +111,9 @@ class AuthenticationServices {
           await _firebaseAuth.signInWithCredential(facebookAuthCredential);
       if (userCredential.user != null) {
         if (userCredential.additionalUserInfo!.isNewUser) {
-          return await _signupWithFacebook(userCredential);
+          await _signupWithFacebook(userCredential);
+          await getUserModel();
+          return true;
         } else {
           await getUserModel();
           return true;

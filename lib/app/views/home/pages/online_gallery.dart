@@ -1,4 +1,5 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
+import 'package:billeddeling/app/services/authentication_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -45,7 +46,7 @@ class OnlineGalleryPage extends StatelessWidget {
                     .collection('posts')
                     .where(
                       "userId",
-                      isEqualTo: controller.user.userId,
+                      isEqualTo: AuthenticationServices().user!.userId,
                     )
                     .snapshots(),
                 builder: (context,

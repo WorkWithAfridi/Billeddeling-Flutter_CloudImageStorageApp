@@ -40,7 +40,7 @@ class SignupController extends GetxController {
     isSignupWithGoogleButtonLoading.value = false;
   }
 
-  Future onLoginWithFacebookButtonClick() async {
+  Future onSignupWithFacebookButtonClick() async {
     isSignupWithFacebookButtonLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     try {

@@ -94,7 +94,7 @@ class HomeController extends GetxController {
               onPressed: () async {
                 image = await selectCropCompressImage
                     .selectCropCompressImageFromGallery(
-                        compressionAmount: 70, context: context);
+                        compressionAmount: 90, context: context);
                 if (image != null) {
                   Get.back();
                   await Get.to(
@@ -126,7 +126,7 @@ class HomeController extends GetxController {
               onPressed: () async {
                 image = await selectCropCompressImage
                     .selectCropCompressImageFromCamera(
-                        compressionAmount: 70, context: context);
+                        compressionAmount: 90, context: context);
                 if (image != null) {
                   Get.back();
                   await Get.to(
