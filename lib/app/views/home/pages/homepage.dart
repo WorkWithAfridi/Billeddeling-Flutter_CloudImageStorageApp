@@ -1,4 +1,5 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
+import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:billeddeling/app/views/home/widgets/image_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -155,7 +156,7 @@ class ImageBrowserModule extends StatelessWidget {
                         .collection('posts')
                         .where(
                           "userId",
-                          isEqualTo: controller.user.userId,
+                          isEqualTo: FirebaseServices().getCurrentUserId(),
                         )
                         .snapshots(),
                     builder: (context,

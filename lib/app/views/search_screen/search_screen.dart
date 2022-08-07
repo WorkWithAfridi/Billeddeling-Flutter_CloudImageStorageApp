@@ -1,6 +1,7 @@
 import 'package:billeddeling/app/data/constants/dimentions.dart';
 import 'package:billeddeling/app/data/constants/fonts.dart';
 import 'package:billeddeling/app/services/authentication_services.dart';
+import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/shared/widgets/custom_back_button.dart';
 import 'package:billeddeling/app/views/search_screen/search_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -88,7 +89,7 @@ class ResultModule extends StatelessWidget {
                         .collection('posts')
                         .where(
                           "userId",
-                          isEqualTo: AuthenticationServices().user!.userId,
+                          isEqualTo: FirebaseServices().getCurrentUserId(),
                         )
                         .snapshots(),
                     builder: (context,

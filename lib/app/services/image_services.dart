@@ -1,30 +1,34 @@
 import 'dart:typed_data';
 
 import 'package:billeddeling/app/data/models/post_model.dart';
+import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageServices {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
   ImageServices._internal();
   static final ImageServices _imageServices = ImageServices._internal();
   factory ImageServices() => _imageServices;
 
   Future updatePost(String postId, String title, String date) async {
-    await _firebaseFirestore.collection('posts').doc(postId).update({
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection('posts')
+        .doc(postId)
+        .update({
       'title': title,
       'date': date,
     });
   }
 
   Future deletePost(PostModel postModel) async {
-    await _firebaseFirestore.collection('posts').doc(postModel.postId).delete();
-    await _storage.refFromURL(postModel.url).delete();
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection('posts')
+        .doc(postModel.postId)
+        .delete();
+    await FirebaseServices().firebaseStorage.refFromURL(postModel.url).delete();
     _updateUserImageList(
       postId: postModel.postId,
       shouldAddPostIdToUserImageList: false,
@@ -43,7 +47,7 @@ class ImageServices {
       PostModel postModel = PostModel(
         postId: postId,
         imageId: imageId,
-        userId: _firebaseAuth.currentUser!.uid,
+        userId: FirebaseServices().firebaseAuth.currentUser!.uid,
         title: title,
         date: date,
         url: imageUrl,
@@ -60,28 +64,39 @@ class ImageServices {
     bool shouldAddPostIdToUserImageList = true,
   }) async {
     if (shouldAddPostIdToUserImageList) {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayUnion([postId])
-      });
+      _addPostIdToUserImageList(postId);
     } else {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(_firebaseAuth.currentUser!.uid)
-          .update({
-        'imageList': FieldValue.arrayRemove([postId]),
-      });
+      _removePostIdFromUserImageList(postId);
     }
     return;
   }
 
+  Future _addPostIdToUserImageList(String postId) async {
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection('users')
+        .doc(FirebaseServices().getCurrentUserId())
+        .update({
+      'imageList': FieldValue.arrayUnion([postId])
+    });
+  }
+
+  Future _removePostIdFromUserImageList(String postId) async {
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection('users')
+        .doc(FirebaseServices().getCurrentUserId())
+        .update({
+      'imageList': FieldValue.arrayRemove([postId]),
+    });
+  }
+
   Future _uploadImageToFirebaseStorage(Uint8List image, String imageId) async {
-    Reference ref = _storage
+    Reference ref = FirebaseServices()
+        .firebaseStorage
         .ref()
         .child("images")
-        .child(_firebaseAuth.currentUser!.uid)
+        .child(FirebaseServices().getCurrentUserId())
         .child(imageId);
     UploadTask uploadTask = ref.putData(image);
 
@@ -93,7 +108,8 @@ class ImageServices {
   Future _uploadPostToFirebaseFirestore(
     PostModel postModel,
   ) async {
-    await _firebaseFirestore
+    await FirebaseServices()
+        .firebaseFirestore
         .collection("posts")
         .doc(postModel.postId)
         .set(postModel.toJson());

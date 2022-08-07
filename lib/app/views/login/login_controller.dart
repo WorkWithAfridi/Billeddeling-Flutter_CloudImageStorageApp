@@ -15,6 +15,7 @@ class LoginBinding extends Bindings {
 class LoginController extends GetxController {
   var isLoginWithGoogleButtonLoading = false.obs;
   var isLoginWithFacebookButtonLoading = false.obs;
+  
   onSignupButtonClick() {
     Get.toNamed(ROUTES.getSignupRoute);
   }

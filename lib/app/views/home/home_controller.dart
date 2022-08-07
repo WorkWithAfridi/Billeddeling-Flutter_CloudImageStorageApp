@@ -5,6 +5,7 @@ import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/data/models/user_model.dart';
 import 'package:billeddeling/app/routing/routes.dart';
 import 'package:billeddeling/app/services/authentication_services.dart';
+import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/services/image_services.dart';
 import 'package:billeddeling/app/shared/widgets/custom_snackbar.dart';
 import 'package:billeddeling/app/views/edit_image/edit_image_screen.dart';
@@ -25,7 +26,7 @@ class HomeBinding extends Bindings {
 class HomeController extends GetxController {
   var currentHomePageIndex = 0.obs;
   var homePagePageController = PageController(initialPage: 0);
-  UserModel user = AuthenticationServices().user!;
+  UserModel user = FirebaseServices().currentUser;
   Uint8List? image;
 
   onPageChange(int index) {
@@ -40,7 +41,7 @@ class HomeController extends GetxController {
   }
 
   updateUserModel() async {
-    user = await AuthenticationServices().getUserModel();
+    user = await FirebaseServices().getCurrentUser();
     update();
   }
 

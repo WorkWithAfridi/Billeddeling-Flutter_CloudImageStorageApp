@@ -1,7 +1,7 @@
-import 'package:billeddeling/app/views/home/pages/online_gallery.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
+import 'online_gallery.dart';
 
 List<Widget> pages = [
   const Homepage(),
