@@ -28,6 +28,7 @@ class HomeController extends GetxController {
   var homePagePageController = PageController(initialPage: 0);
   UserModel user = FirebaseServices().currentUser;
   Uint8List? image;
+  var isDownloading = false.obs;
 
   onPageChange(int index) {
     currentHomePageIndex.value = index;
