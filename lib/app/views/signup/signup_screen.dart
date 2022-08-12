@@ -30,7 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CustomBackButton(),
+        leading:  CustomBackButton(),
       ),
       body: Container(
         padding: customPadding,

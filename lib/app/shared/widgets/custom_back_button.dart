@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomBackButton extends StatelessWidget {
-  const CustomBackButton({Key? key}) : super(key: key);
+  CustomBackButton({
+    Key? key,
+    this.buttonColor = black,
+  }) : super(key: key);
+  Color buttonColor = black;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +16,9 @@ class CustomBackButton extends StatelessWidget {
       onPressed: () {
         Get.back();
       },
-      icon: const Icon(
+      icon: Icon(
         FluentIcons.arrow_left_12_regular,
-        color: black,
+        color: buttonColor,
         size: 15,
       ),
     );

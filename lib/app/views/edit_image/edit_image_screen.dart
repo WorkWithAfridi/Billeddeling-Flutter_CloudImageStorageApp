@@ -56,7 +56,7 @@ class _EditImageScreenState extends State<EditImageScreen> {
           "Edit details",
           style: semiBoldTextStyle,
         ),
-        leading: const CustomBackButton(),
+        leading: CustomBackButton(),
       ),
       body: Container(
         padding: customPadding,

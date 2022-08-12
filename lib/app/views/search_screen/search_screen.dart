@@ -36,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
           "Search",
           style: boldTextStyle,
         ),
-        leading: const CustomBackButton(),
+        leading: CustomBackButton(),
       ),
       body: Container(
         padding: customPadding,
