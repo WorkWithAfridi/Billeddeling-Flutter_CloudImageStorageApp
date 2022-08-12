@@ -1,5 +1,6 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/services/firebase_services.dart';
+import 'package:billeddeling/app/views/image_viewer/image_viewer_scree.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -80,12 +81,17 @@ class OnlineGalleryPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           PostModel postModel =
                               PostModel.fromJson(snapshot.data!.docs[index]);
-                          return ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(customBorderRadius),
-                            child: Image.network(
-                              postModel.url,
-                              fit: BoxFit.fill,
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(ImageViewer(postModel: postModel));
+                            },
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(customBorderRadius),
+                              child: Image.network(
+                                postModel.url,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           );
                         },
