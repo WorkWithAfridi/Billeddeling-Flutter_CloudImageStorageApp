@@ -3,7 +3,10 @@ import 'dart:typed_data';
 import 'package:billeddeling/app/data/models/post_model.dart';
 import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageServices {
@@ -115,5 +118,33 @@ class ImageServices {
         .set(postModel.toJson());
     await _updateUserImageList(postId: postModel.postId);
     return;
+  }
+
+  Future getPost(String postId) async {
+    DocumentSnapshot postDoc = await FirebaseServices()
+        .firebaseFirestore
+        .collection('posts')
+        .doc(postId)
+        .get();
+    return PostModel.fromJson(postDoc);
+  }
+
+  Future downloadImage(PostModel postModel) async {
+    try {
+      String downloadLink = await FirebaseServices()
+          .firebaseStorage
+          .refFromURL(postModel.url)
+          .getDownloadURL();
+
+      // log(downloadLink);
+
+      final tempDir = await getTemporaryDirectory();
+      final path = "${tempDir.path}/${postModel.title}.jpg";
+      await Dio().download(downloadLink, path);
+      await GallerySaver.saveImage(path, toDcim: true);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }
