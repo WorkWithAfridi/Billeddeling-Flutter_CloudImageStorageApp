@@ -47,6 +47,7 @@ dependencies:
   lottie: ^1.4.1
   path_provider: ^2.0.11
   selectcropcompressimage: ^0.0.25
+  share_plus: ^4.0.10+1
   uuid: ^3.0.6
 
 dev_dependencies:

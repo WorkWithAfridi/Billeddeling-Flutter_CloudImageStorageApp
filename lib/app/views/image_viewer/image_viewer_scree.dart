@@ -110,6 +110,46 @@ class _ImageViewerState extends State<ImageViewer> {
                       Flexible(
                         flex: 1,
                         child: EditButton(),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () async {
+                            bool shared = await ImageServices()
+                                .shareImage(controller.postModel);
+                            if (!shared) {
+                              showCustomSnackbar(
+                                title: "Oh snap",
+                                message:
+                                    "An error occurred while trying to share your image!",
+                                isWarning: true,
+                              );
+                            }
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            height: double.maxFinite,
+                            width: double.maxFinite,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.share,
+                                  color: white.withOpacity(.8),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Share",
+                                  style: regularTextStyle.copyWith(
+                                    color: white.withOpacity(.8),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),

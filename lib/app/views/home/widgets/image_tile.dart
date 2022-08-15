@@ -94,6 +94,36 @@ class _ImageTileState extends State<ImageTile> {
                       children: [
                         GestureDetector(
                           onTap: () async {
+                            bool shared = await ImageServices()
+                                .shareImage(widget.postModel);
+                            if (!shared) {
+                              showCustomSnackbar(
+                                title: "Oh snap",
+                                message:
+                                    "An error occurred while trying to share your image!",
+                                isWarning: true,
+                              );
+                            }
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.blueAccent,
+                            ),
+                            child: const Icon(
+                              Icons.share,
+                              size: 15,
+                              color: white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
                             setState(() {
                               isDownloading = true;
                             });

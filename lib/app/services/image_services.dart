@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:billeddeling/app/data/models/post_model.dart';
@@ -7,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageServices {
@@ -144,6 +146,26 @@ class ImageServices {
       await GallerySaver.saveImage(path, toDcim: true);
       return true;
     } catch (err) {
+      return false;
+    }
+  }
+
+  Future shareImage(PostModel postModel) async {
+    try {
+      final downloadLink = await FirebaseServices()
+          .firebaseStorage
+          .refFromURL(postModel.url)
+          .getDownloadURL();
+      final tempDir = await getTemporaryDirectory();
+      final path = "${tempDir.path}/${postModel.title}.jpg";
+      await Dio().download(downloadLink, path);
+      await Share.shareFiles(
+        [path],
+        text: postModel.title,
+      );
+      return true;
+    } catch (err) {
+      log(err.toString());
       return false;
     }
   }
