@@ -41,7 +41,8 @@ class CustomButton extends StatelessWidget {
         ),
         child: isLoading
             ? LottieBuilder.asset(
-                "assets/lottie_animations/loading-animation.json")
+                "assets/lottie_animations/loading-animation.json",
+              )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

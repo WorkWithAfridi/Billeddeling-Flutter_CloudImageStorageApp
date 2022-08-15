@@ -4,6 +4,7 @@ import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:billeddeling/app/views/image_viewer/image_viewer_scree.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/dimentions.dart';
@@ -24,7 +25,7 @@ class ImageTile extends StatefulWidget {
 class _ImageTileState extends State<ImageTile> {
   final HomeController controller = Get.find();
 
-  bool isDownloading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +84,22 @@ class _ImageTileState extends State<ImageTile> {
                   ],
                 ),
               ),
-              isDownloading
-                  ? const SizedBox(
+              isLoading
+                  ? SizedBox(
                       width: 110,
-                      child: LinearProgressIndicator(
-                        color: red,
+                      child: Center(
+                        child: LottieBuilder.asset(
+                          "assets/lottie_animations/loading-animation.json",
+                        ),
                       ),
                     )
                   : Row(
                       children: [
                         GestureDetector(
                           onTap: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
                             bool shared = await ImageServices()
                                 .shareImage(widget.postModel);
                             if (!shared) {
@@ -104,6 +110,9 @@ class _ImageTileState extends State<ImageTile> {
                                 isWarning: true,
                               );
                             }
+                            setState(() {
+                              isLoading = false;
+                            });
                           },
                           child: Container(
                             height: 30,
@@ -125,7 +134,7 @@ class _ImageTileState extends State<ImageTile> {
                         GestureDetector(
                           onTap: () async {
                             setState(() {
-                              isDownloading = true;
+                              isLoading = true;
                             });
                             await Future.delayed(const Duration(seconds: 2));
                             bool isDownloaded =
@@ -148,7 +157,7 @@ class _ImageTileState extends State<ImageTile> {
                               );
                             }
                             setState(() {
-                              isDownloading = false;
+                              isLoading = false;
                             });
                           },
                           child: Container(
