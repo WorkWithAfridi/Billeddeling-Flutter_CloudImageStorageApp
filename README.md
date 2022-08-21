@@ -2,7 +2,7 @@
 
 ## A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. With Facebook and Google Signin/ Signup facilities.
 
-A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. With Facebook and Google Signin/ Signup facilities. Users can signin or signup using their preferred platform and share/ upload image posts directly from their gallery or storage, and back them up on the cloud.
+A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. With Facebook and Google Signin/ Signup facilities. Users can signin or signup using their preferred platform and share/ upload image posts directly from their gallery or storage, and back them up on the cloud, and then download them or share them to their desired social media accounts directly from within the app.
 
 * User Authentication using Firebase Authentication, Google Auth and Facebook Auth.
 * Backend using Firebase Cloud Firestore
@@ -10,6 +10,7 @@ A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. W
 * Image compressor, Image cropping and choosing is achieved using my package from pub.dev: [SelectCropCompressImage](https://pub.dev/packages/selectcropcompressimage)
 
 ## Demo video and in-app screenshots
+## To be updated soon...
 
 * [Demo Video](https://youtu.be/Mregnso6uLg)
 
