@@ -10,7 +10,6 @@ A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. W
 * Image compressor, Image cropping and choosing is achieved using my package from pub.dev: [SelectCropCompressImage](https://pub.dev/packages/selectcropcompressimage)
 
 ## Demo video and in-app screenshots
-## To be updated soon...
 
 * [Demo Video](https://youtu.be/Mregnso6uLg)
 
