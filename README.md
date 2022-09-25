@@ -17,7 +17,7 @@ A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. W
 
 ## How to install the app on your physical device
 
-Download the source code and compile the apk using Flutter CLI or Android Studio
+Download the source code and compile the apk using Flutter CLI or Android Studio. Or download the APK from  [here](https://drive.google.com/drive/folders/1uJOkFjLKxMm0jRECrq9ruT29ZszCIt4z?usp=sharing)
 
 ## Want to contribute to the project? 
 
