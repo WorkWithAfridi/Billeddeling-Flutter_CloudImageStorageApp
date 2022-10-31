@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../../data/constants/colors.dart';
 import '../../../data/constants/dimentions.dart';
 import '../../../data/constants/fonts.dart';
+import '../../../services/firebase_services.dart';
 import '../home_controller.dart';
 
 class OnlineGalleryPage extends StatelessWidget {
@@ -48,10 +49,10 @@ class OnlineGalleryPage extends StatelessWidget {
                 : StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('posts')
-                        // .where(
-                        //   "userId",
-                        //   isEqualTo: FirebaseServices().getCurrentUserId(),
-                        // )
+                        .where(
+                          "userId",
+                          isEqualTo: FirebaseServices().getCurrentUserId(),
+                        )
                         .snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
