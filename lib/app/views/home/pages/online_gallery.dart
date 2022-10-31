@@ -1,5 +1,4 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
-import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/views/image_viewer/image_viewer_scree.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +48,12 @@ class OnlineGalleryPage extends StatelessWidget {
                 : StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('posts')
-                        .where(
-                          "userId",
-                          isEqualTo: FirebaseServices().getCurrentUserId(),
-                        )
+                        // .where(
+                        //   "userId",
+                        //   isEqualTo: FirebaseServices().getCurrentUserId(),
+                        // )
                         .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
+                    builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -79,15 +76,13 @@ class OnlineGalleryPage extends StatelessWidget {
                           ],
                         ),
                         itemBuilder: (context, index) {
-                          PostModel postModel =
-                              PostModel.fromJson(snapshot.data!.docs[index]);
+                          PostModel postModel = PostModel.fromJson(snapshot.data!.docs[index]);
                           return GestureDetector(
                             onTap: () {
                               Get.to(ImageViewer(postModel: postModel));
                             },
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(customBorderRadius),
+                              borderRadius: BorderRadius.circular(customBorderRadius),
                               child: Image.network(
                                 postModel.url,
                                 fit: BoxFit.fill,

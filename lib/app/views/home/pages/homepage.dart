@@ -1,5 +1,4 @@
 import 'package:billeddeling/app/data/models/post_model.dart';
-import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/views/home/home_controller.dart';
 import 'package:billeddeling/app/views/home/widgets/image_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -154,14 +153,12 @@ class ImageBrowserModule extends StatelessWidget {
                 : StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('posts')
-                        .where(
-                          "userId",
-                          isEqualTo: FirebaseServices().getCurrentUserId(),
-                        )
+                        // .where(
+                        //   "userId",
+                        //   isEqualTo: FirebaseServices().getCurrentUserId(),
+                        // )
                         .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
+                    builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -172,8 +169,7 @@ class ImageBrowserModule extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          PostModel postModel =
-                              PostModel.fromJson(snapshot.data!.docs[index]);
+                          PostModel postModel = PostModel.fromJson(snapshot.data!.docs[index]);
                           return ImageTile(
                             postModel: postModel,
                           );
@@ -236,8 +232,7 @@ class AccountStatusModule extends StatelessWidget {
               Expanded(
                 child: Text(
                   "You currently have this many images on Billeddeling!!",
-                  style: regularTextStyle.copyWith(
-                      height: 1, fontSize: 14, color: black.withOpacity(.6)),
+                  style: regularTextStyle.copyWith(height: 1, fontSize: 14, color: black.withOpacity(.6)),
                   maxLines: 2,
                 ),
               )

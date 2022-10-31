@@ -35,18 +35,18 @@ class AppIconAndTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Billeddeling",
+              "HOPE",
               style: semiBoldTextStyle.copyWith(
                 fontSize: 16,
               ),
             ),
-            Text(
-              "Cloud Storage for Images.",
-              style: regularTextStyle.copyWith(
-                height: .7,
-                fontSize: 8,
-              ),
-            ),
+            // Text(
+            //   "Cloud Storage for Images.",
+            //   style: regularTextStyle.copyWith(
+            //     height: .7,
+            //     fontSize: 8,
+            //   ),
+            // ),
           ],
         )
       ],

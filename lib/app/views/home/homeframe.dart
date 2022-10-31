@@ -33,19 +33,19 @@ class _HomeframeState extends State<Homeframe> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Billeddeling",
+              "HOPE",
               style: semiBoldTextStyle.copyWith(
                 fontSize: 18,
               ),
             ),
-            Text(
-              "Your one stop solution\nfor cloud based image storage.",
-              style: regularTextStyle.copyWith(
-                height: .7,
-                fontSize: 10,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            // Text(
+            //   "Your one stop solution\nfor cloud based image storage.",
+            //   style: regularTextStyle.copyWith(
+            //     height: .7,
+            //     fontSize: 10,
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
           ],
         ),
         centerTitle: true,
