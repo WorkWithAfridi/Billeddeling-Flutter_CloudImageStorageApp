@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  change_app_package_name: ^1.1.0
   cloud_firestore: ^3.4.3
   cupertino_icons: ^1.0.2
   dio: ^4.0.6

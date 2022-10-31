@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "1012486627585",
-    "project_id": "billeddelingapp-e2467",
-    "storage_bucket": "billeddelingapp-e2467.appspot.com"
+    "project_number": "160496098377",
+    "project_id": "hopeapp-fa45c",
+    "storage_bucket": "hopeapp-fa45c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1012486627585:android:7875a5a34f67f7e8bbbb00",
+        "mobilesdk_app_id": "1:160496098377:android:40c855bb2063d171c5f398",
         "android_client_info": {
-          "package_name": "com.workwithafridi.billeddeling"
+          "package_name": "com.workwithafridi.hopeapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1012486627585-rbc46u55kooem5u6bf5d5cf5c9hmv9qc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.workwithafridi.billeddeling",
-            "certificate_hash": "c5bea0a32f7c9a02981ee3460c204f55779dfe00"
-          }
-        },
-        {
-          "client_id": "1012486627585-m1im1rh9tsikh07ceo76671aqoout2sq.apps.googleusercontent.com",
+          "client_id": "160496098377-cqbusvblnhnt2dnmf0993q3alothc0qj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAGR0g1oDlPwzyM9JJwFkqrdEXCIZwpr_E"
+          "current_key": "AIzaSyAp8xsroIGKvEvdUz6U1VW6z8DAI0xu8Nk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1012486627585-m1im1rh9tsikh07ceo76671aqoout2sq.apps.googleusercontent.com",
+              "client_id": "160496098377-cqbusvblnhnt2dnmf0993q3alothc0qj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
