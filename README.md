@@ -1,13 +1,31 @@
 # Billeddeling
 
-## A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. With Facebook and Google Signin/ Signup facilities.
+Welcome to the documentation for Billeddeling - the image sharing app that allows users to store their images in a cloud storage! This app is built using Flutter, getx, and Firebase, providing a seamless and secure experience for all users.
 
-A full-stack image sharing and cloud storage using Flutter, Firebase and GetX. With Facebook and Google Signin/ Signup facilities. Users can signin or signup using their preferred platform and share/ upload image posts directly from their gallery or storage, and back them up on the cloud, and then download them or share them to their desired social media accounts directly from within the app.
+Features:
 
-* User Authentication using Firebase Authentication, Google Auth and Facebook Auth.
-* Backend using Firebase Cloud Firestore
-* State management using GetX
-* Image compressor, Image cropping and choosing is achieved using my package from pub.dev: [SelectCropCompressImage](https://pub.dev/packages/selectcropcompressimage)
+Built-in image selection from gallery or capture an image from the camera
+Cropping and rotating features to edit the selected images
+Image and video compressing features to save storage space
+Secure cloud storage using Firebase
+User authentication and authorization for privacy and security
+Getting Started:
+To get started with Billeddeling, you can download the app from the Google Play Store or the App Store. Once downloaded, create an account or sign in with your existing Firebase account.
+
+Selecting and Editing Images:
+To select an image from the gallery or capture an image from the camera, simply navigate to the "Select Image" screen and choose the appropriate option. Once you have selected an image, you can crop or rotate it using the built-in editing features.
+
+Compressing Images and Videos:
+To save storage space on your device, you can compress your images and videos using the "Compress" feature in the app. This will reduce the file size without sacrificing too much image or video quality.
+
+Uploading and Sharing Images:
+Once you have edited and compressed your images and videos, you can upload them to the cloud storage using the "Upload" feature. From here, you can also share your images with other users on the app.
+
+Privacy and Security:
+Billeddeling uses Firebase for secure cloud storage, as well as user authentication and authorization. This ensures that your images and data are protected and only accessible to authorized users.
+
+Conclusion:
+Billeddeling is a powerful and secure image sharing app that allows users to store their images in the cloud and share them with others. With built-in editing and compressing features, this app is perfect for anyone looking to save space and share their images with friends and family.
 
 ## Demo video and in-app screenshots
 
