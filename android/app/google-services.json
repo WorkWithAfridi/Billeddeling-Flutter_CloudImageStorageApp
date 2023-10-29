@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1012486627585-rbc46u55kooem5u6bf5d5cf5c9hmv9qc.apps.googleusercontent.com",
+          "client_id": "1012486627585-1lgm837q9g89d8vir249a73a215strq3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.workwithafridi.billeddeling",
-            "certificate_hash": "c5bea0a32f7c9a02981ee3460c204f55779dfe00"
+            "certificate_hash": "ed8ae2b340ec219e80b070d7737d4cdb82dfae00"
           }
         },
         {
