@@ -10,7 +10,7 @@ import 'pages/homeframe_pages.dart';
 import 'widgets/homeframe_botton_navbar.dart';
 
 class Homeframe extends StatefulWidget {
-  const Homeframe({Key? key}) : super(key: key);
+  const Homeframe({super.key});
 
   @override
   State<Homeframe> createState() => _HomeframeState();
@@ -41,7 +41,7 @@ class _HomeframeState extends State<Homeframe> {
             Text(
               "Your one stop solution\nfor cloud based image storage.",
               style: regularTextStyle.copyWith(
-                height: .7,
+                height: .9,
                 fontSize: 10,
               ),
               textAlign: TextAlign.center,

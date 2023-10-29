@@ -1,9 +1,8 @@
 import 'package:billeddeling/app/data/constants/dimentions.dart';
 import 'package:billeddeling/app/data/constants/fonts.dart';
-import 'package:billeddeling/app/services/authentication_services.dart';
 import 'package:billeddeling/app/services/firebase_services.dart';
 import 'package:billeddeling/app/shared/widgets/custom_back_button.dart';
-import 'package:billeddeling/app/views/search_screen/search_controller.dart';
+import 'package:billeddeling/app/views/search_screen/search_controller.dart' as SC;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,11 +19,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final SearchController controller = Get.find();
+  final SC.SearchController controller = Get.find();
 
   @override
   void dispose() {
-    Get.delete<SearchController>();
+    Get.delete<SC.SearchController>();
     super.dispose();
   }
 
@@ -62,7 +61,7 @@ class ResultModule extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final SearchController controller = Get.find();
+  final SC.SearchController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +91,13 @@ class ResultModule extends StatelessWidget {
                           isEqualTo: FirebaseServices().getCurrentUserId(),
                         )
                         .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
+                    builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                      return GetBuilder<SearchController>(
+                      return GetBuilder<SC.SearchController>(
                         init: controller,
                         initState: (_) {},
                         builder: (_) {
@@ -109,11 +106,8 @@ class ResultModule extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              PostModel postModel = PostModel.fromJson(
-                                  snapshot.data!.docs[index]);
-                              return postModel.title
-                                      .toLowerCase()
-                                      .contains(controller.searchQuery)
+                              PostModel postModel = PostModel.fromJson(snapshot.data!.docs[index]);
+                              return postModel.title.toLowerCase().contains(controller.searchQuery)
                                   ? ImageTile(
                                       postModel: postModel,
                                     )
@@ -136,7 +130,7 @@ class SearchTextField extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final SearchController controller = Get.find();
+  final SC.SearchController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

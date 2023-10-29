@@ -48,124 +48,125 @@ class HomeController extends GetxController {
 
   SelectCropCompressImage selectCropCompressImage = SelectCropCompressImage();
 
-  Future<void> selectImageSource() {
-    return showDialog(
-      context: Get.context!,
-      barrierColor: Colors.black54,
-      builder: (context) {
-        return SimpleDialog(
-          elevation: 6,
-          backgroundColor: white,
-          title: GestureDetector(
-            onTap: () {},
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Billeddeling",
-                  style: semiBoldTextStyle.copyWith(
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  'Please select an image source',
-                  style: regularTextStyle.copyWith(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          children: [
-            SimpleDialogOption(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.storage,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+  Future<void> selectImageSource() async {
+    final HomeController controller = Get.find();
+    if (controller.user.imageList!.length > 6) {
+      showCustomSnackbar(title: "Error", message: "You have already crossed the free-tier limit of this application. Please contact admin and upgrade.");
+    } else {
+      return showDialog(
+        context: Get.context!,
+        barrierColor: Colors.black54,
+        builder: (context) {
+          return SimpleDialog(
+            elevation: 6,
+            backgroundColor: white,
+            title: GestureDetector(
+              onTap: () {},
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Gallery',
-                    style: regularTextStyle,
-                  ),
-                ],
-              ),
-              onPressed: () async {
-                image = await selectCropCompressImage
-                    .selectCropCompressImageFromGallery(
-                        compressionAmount: 90, context: context);
-                if (image != null) {
-                  Get.back();
-                  await Get.to(
-                    () => EditImageScreen(
-                      image: image!,
+                    "Billeddeling",
+                    style: semiBoldTextStyle.copyWith(
+                      fontSize: 16,
                     ),
-                  );
-                }
-                Get.back();
-              },
-            ),
-            SimpleDialogOption(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.camera,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
                   ),
                   Text(
-                    'Camera',
-                    style: regularTextStyle,
+                    'Please select an image source',
+                    style: regularTextStyle.copyWith(fontSize: 12),
                   ),
                 ],
               ),
-              onPressed: () async {
-                image = await selectCropCompressImage
-                    .selectCropCompressImageFromCamera(
-                        compressionAmount: 90, context: context);
-                if (image != null) {
-                  Get.back();
-                  await Get.to(
-                    () => EditImageScreen(
-                      image: image!,
+            ),
+            children: [
+              SimpleDialogOption(
+                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.storage,
+                      size: 20,
                     ),
-                  );
-                } else {
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Gallery',
+                      style: regularTextStyle,
+                    ),
+                  ],
+                ),
+                onPressed: () async {
+                  image = await selectCropCompressImage.selectCropCompressImageFromGallery(compressionAmount: 90, context: context);
+                  if (image != null) {
+                    Get.back();
+                    await Get.to(
+                      () => EditImageScreen(
+                        image: image!,
+                      ),
+                    );
+                  }
                   Get.back();
-                }
-              },
-            ),
-            SimpleDialogOption(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.close,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Cancel',
-                    style: regularTextStyle,
-                  ),
-                ],
+                },
               ),
-              onPressed: () async {
-                Get.back();
-              },
-            ),
-          ],
-        );
-      },
-    );
+              SimpleDialogOption(
+                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.camera,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Camera',
+                      style: regularTextStyle,
+                    ),
+                  ],
+                ),
+                onPressed: () async {
+                  image = await selectCropCompressImage.selectCropCompressImageFromCamera(compressionAmount: 90, context: context);
+                  if (image != null) {
+                    Get.back();
+                    await Get.to(
+                      () => EditImageScreen(
+                        image: image!,
+                      ),
+                    );
+                  } else {
+                    Get.back();
+                  }
+                },
+              ),
+              SimpleDialogOption(
+                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Cancel',
+                      style: regularTextStyle,
+                    ),
+                  ],
+                ),
+                onPressed: () async {
+                  Get.back();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   Future<void> openProfilePopUp() {
@@ -212,10 +213,10 @@ class HomeController extends GetxController {
           children: [
             SimpleDialogOption(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   Icon(
-                    Icons.storage,
+                    Icons.logout,
                     size: 20,
                   ),
                   SizedBox(
@@ -231,8 +232,7 @@ class HomeController extends GetxController {
                 if (await AuthenticationServices().logoutUser()) {
                   Get.offAllNamed(ROUTES.getLoginRoute);
                 } else {
-                  showCustomSnackbar(
-                      title: "Error", message: "Sorry couldn't log you out!");
+                  showCustomSnackbar(title: "Error", message: "Sorry couldn't log you out!");
                 }
               },
             ),
