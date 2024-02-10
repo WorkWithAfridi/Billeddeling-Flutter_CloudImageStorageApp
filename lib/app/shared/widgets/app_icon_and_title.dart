@@ -6,8 +6,8 @@ import '../../data/constants/fonts.dart';
 
 class AppIconAndTitle extends StatelessWidget {
   const AppIconAndTitle({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AppIconAndTitle extends StatelessWidget {
         const Icon(
           FluentIcons.camera_16_regular,
           size: 40,
-          color: red,
+          color: black,
         ),
         const SizedBox(
           width: 2,
