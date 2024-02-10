@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1012486627585-d3lsoe5t8n7puqrremffnddighvlro0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.workwithafridi.billeddeling",
+            "certificate_hash": "368ba3176f627ef8d03baa6599aa298d54d27993"
+          }
+        },
+        {
           "client_id": "1012486627585-m1im1rh9tsikh07ceo76671aqoout2sq.apps.googleusercontent.com",
           "client_type": 3
         }
